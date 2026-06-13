@@ -375,41 +375,98 @@ if (navbar && typeof gsap !== "undefined") {
     ScrollTrigger.refresh();
     // ================================================================
     // ================================================================
-    //  10. Gradual Blur - Scroll Reveal
+    //  10. Gradual Blur - React Bits style layered blur
     // ================================================================
-    const blurTargets = [
-        { sel: ".about-card", start: "top 85%" },
-        { sel: ".skill-category", start: "top 85%" },
-        { sel: ".portfolio-item", start: "top 88%" },
-        { sel: ".section-head", start: "top 80%" },
-    ];
-    blurTargets.forEach(function(cfg) {
-        document.querySelectorAll(cfg.sel).forEach(function(el) {
-            gsap.set(el, { filter: "blur(16px)", opacity: 0, y: 40 });
-            ScrollTrigger.create({
-                trigger: el, start: cfg.start, once: true,
-                onEnter: function() {
-                    gsap.to(el, { filter: "blur(0px)", opacity: 1, y: 0, duration: 1.2, ease: "power2.out" });
-                },
-            });
+    var gradualBlurStyles = document.createElement("style");
+    gradualBlurStyles.textContent = ".gradient-mask-btm { mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%); }";
+    document.head.appendChild(gradualBlurStyles);
+
+    function createGradualBlur(container) {
+        var layers = 8;
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < layers; i++) {
+            var div = document.createElement("div");
+            var progress = (i + 1) / layers;
+            var blurVal = Math.pow(2, progress * 4) * 0.0625 * 3;
+            div.className = "gradient-mask-btm";
+            div.style.cssText = "position:absolute;inset:0;backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);-webkit-backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);background:transparent;z-index:" + (i + 1) + ";pointer-events:none;";
+            fragment.appendChild(div);
+        }
+        container.appendChild(fragment);
+    }
+
+    document.querySelectorAll(".about-card, .skill-category, .portfolio-item").forEach(function(el) {
+        var wrapper = document.createElement("div");
+        wrapper.style.cssText = "position:relative;overflow:hidden;";
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+        el.style.opacity = "0";
+        var blurOverlay = document.createElement("div");
+        blurOverlay.style.cssText = "position:absolute;inset:0;z-index:50;pointer-events:none;";
+        wrapper.appendChild(blurOverlay);
+
+        // Create gradual blur layers
+        var layers = 6;
+        for (var i = 0; i < layers; i++) {
+            var div = document.createElement("div");
+            var progress = (i + 1) / layers;
+            var blurVal = Math.pow(2, progress * 4) * 0.0625 * 2.5;
+            div.style.cssText = "position:absolute;inset:0;backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);-webkit-backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);z-index:" + (i + 1) + ";opacity:0;transition:opacity 0.6s ease-out;";
+            blurOverlay.appendChild(div);
+        }
+
+        var blurDivs = blurOverlay.querySelectorAll("div");
+        ScrollTrigger.create({
+            trigger: wrapper,
+            start: "top 90%",
+            once: true,
+            onEnter: function() {
+                blurDivs.forEach(function(d, idx) {
+                    setTimeout(function() {
+                        d.style.opacity = "1";
+                    }, idx * 40);
+                });
+                setTimeout(function() {
+                    blurOverlay.style.opacity = "0";
+                    blurOverlay.style.transition = "opacity 0.8s ease-out";
+                    el.style.opacity = "1";
+                    setTimeout(function() {
+                        blurOverlay.style.display = "none";
+                    }, 800);
+                }, layers * 40 + 400);
+            },
         });
     });
 
     // ================================================================
-    //  11. Shape Blur - Hover Effect
+    //  11. Shape Blur - React Bits style radial blur on hover
     // ================================================================
-    document.querySelectorAll(".btn, .filter-btn, .nav-link, .portfolio-item, .about-card").forEach(function(el) {
-        el.addEventListener("mouseenter", function(e) {
+    var shapeBlurStyle = document.createElement("style");
+    shapeBlurStyle.textContent = ".shape-blur-el { position:relative; overflow:hidden; } .shape-blur-overlay { position:absolute; inset:0; pointer-events:none; z-index:10; opacity:0; transition:opacity 0.3s; backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px); mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), black var(--circleSize,0%), transparent calc(var(--circleSize,0%) + 20%)); -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), black var(--circleSize,0%), transparent calc(var(--circleSize,0%) + 20%)); } .shape-blur-el:hover .shape-blur-overlay { opacity:1; }";
+    document.head.appendChild(shapeBlurStyle);
+
+    document.querySelectorAll(".btn, .filter-btn, .portfolio-item").forEach(function(el) {
+        el.className = (el.className || "") + " shape-blur-el";
+        var overlay = document.createElement("div");
+        overlay.className = "shape-blur-overlay";
+        overlay.style.background = "rgba(255,255,255,0.3)";
+        el.appendChild(overlay);
+
+        el.addEventListener("mousemove", function(e) {
             var rect = el.getBoundingClientRect();
             var x = ((e.clientX - rect.left) / rect.width) * 100;
             var y = ((e.clientY - rect.top) / rect.height) * 100;
-            el.style.setProperty("--mx", x + "%");
-            el.style.setProperty("--my", y + "%");
-            el.style.setProperty("--mb", "12px");
-            gsap.to(el, { "--ms": "150%", duration: 0.6, ease: "power2.out" });
+            overlay.style.setProperty("--mx", x + "%");
+            overlay.style.setProperty("--my", y + "%");
+            overlay.style.setProperty("--circleSize", "60%");
+            overlay.style.backdropFilter = "blur(8px)";
+            overlay.style.webkitBackdropFilter = "blur(8px)";
         });
+
         el.addEventListener("mouseleave", function() {
-            gsap.to(el, { "--ms": "0%", duration: 0.4, ease: "power2.in" });
+            overlay.style.setProperty("--circleSize", "0%");
+            overlay.style.backdropFilter = "blur(0px)";
+            overlay.style.webkitBackdropFilter = "blur(0px)";
         });
     });
 
@@ -438,6 +495,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
