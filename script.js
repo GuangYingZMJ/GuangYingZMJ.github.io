@@ -374,104 +374,39 @@ if (navbar && typeof gsap !== "undefined") {
     // ================================================================
     ScrollTrigger.refresh();
     // ================================================================
+        // ================================================================
+    //  10. Border Glow - Scroll Reveal
     // ================================================================
-    //  10. Gradual Blur - React Bits style layered blur
-    // ================================================================
-    var gradualBlurStyles = document.createElement("style");
-    gradualBlurStyles.textContent = ".gradient-mask-btm { mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%); }";
-    document.head.appendChild(gradualBlurStyles);
-
-    function createGradualBlur(container) {
-        var layers = 8;
-        var fragment = document.createDocumentFragment();
-        for (var i = 0; i < layers; i++) {
-            var div = document.createElement("div");
-            var progress = (i + 1) / layers;
-            var blurVal = Math.pow(2, progress * 4) * 0.0625 * 3;
-            div.className = "gradient-mask-btm";
-            div.style.cssText = "position:absolute;inset:0;backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);-webkit-backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);background:transparent;z-index:" + (i + 1) + ";pointer-events:none;";
-            fragment.appendChild(div);
-        }
-        container.appendChild(fragment);
-    }
-
     document.querySelectorAll(".about-card, .skill-category, .portfolio-item").forEach(function(el) {
         var wrapper = document.createElement("div");
-        wrapper.style.cssText = "position:relative;overflow:hidden;";
+        wrapper.style.cssText = "position:relative;overflow:hidden;border-radius:20px;";
         el.parentNode.insertBefore(wrapper, el);
         wrapper.appendChild(el);
-        el.style.opacity = "0";
-        var blurOverlay = document.createElement("div");
-        blurOverlay.style.cssText = "position:absolute;inset:0;z-index:50;pointer-events:none;";
-        wrapper.appendChild(blurOverlay);
 
-        // Create gradual blur layers
-        var layers = 4;
-        for (var i = 0; i < layers; i++) {
-            var div = document.createElement("div");
-            var progress = (i + 1) / layers;
-            var blurVal = Math.pow(2, progress * 3) * 0.0625 * 0.8;
-            div.style.cssText = "position:absolute;inset:0;backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);-webkit-backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);z-index:" + (i + 1) + ";opacity:0;transition:opacity 0.6s ease-out;";
-            blurOverlay.appendChild(div);
-        }
+        var borderGlow = document.createElement("div");
+        borderGlow.style.cssText = "position:absolute;inset:-4px;z-index:5;pointer-events:none;border-radius:22px;opacity:0;box-shadow:0 0 20px 10px #ff9a9e;";
+        wrapper.appendChild(borderGlow);
 
-        var blurDivs = blurOverlay.querySelectorAll("div");
         ScrollTrigger.create({
             trigger: wrapper,
-            start: "top 90%",
+            start: "top 88%",
             once: true,
             onEnter: function() {
-                blurDivs.forEach(function(d, idx) {
-                    setTimeout(function() {
-                        d.style.opacity = "1";
-                    }, idx * 40);
-                });
-                setTimeout(function() {
-                    blurOverlay.style.opacity = "0";
-                    blurOverlay.style.transition = "opacity 0.8s ease-out";
-                    el.style.opacity = "1";
-                    setTimeout(function() {
-                        blurOverlay.style.display = "none";
-                    }, 800);
-                }, layers * 40 + 400);
+                borderGlow.style.transition = "opacity 1.2s ease-out";
+                borderGlow.style.opacity = "0.7";
+                setTimeout(function() { borderGlow.style.opacity = "0"; }, 1800);
             },
         });
     });
 
     // ================================================================
-    //  11. Shape Blur - React Bits style radial blur on hover
+    //  11. Border Hover Blur
     // ================================================================
-    var shapeBlurStyle = document.createElement("style");
-    shapeBlurStyle.textContent = ".shape-blur-el { position:relative; overflow:hidden; } .shape-blur-overlay { position:absolute; inset:0; pointer-events:none; z-index:10; opacity:0; transition:opacity 0.3s; backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px); mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), black var(--circleSize,0%), transparent calc(var(--circleSize,0%) + 20%)); -webkit-mask-image:radial-gradient(circle at var(--mx,50%) var(--my,50%), black var(--circleSize,0%), transparent calc(var(--circleSize,0%) + 20%)); } .shape-blur-el:hover .shape-blur-overlay { opacity:1; }";
-    document.head.appendChild(shapeBlurStyle);
-
-    document.querySelectorAll(".btn, .filter-btn, .portfolio-item").forEach(function(el) {
-        el.className = (el.className || "") + " shape-blur-el";
-        var overlay = document.createElement("div");
-        overlay.className = "shape-blur-overlay";
-        overlay.style.background = "rgba(255,255,255,0.3)";
-        el.appendChild(overlay);
-
-        el.addEventListener("mousemove", function(e) {
-            var rect = el.getBoundingClientRect();
-            var x = ((e.clientX - rect.left) / rect.width) * 100;
-            var y = ((e.clientY - rect.top) / rect.height) * 100;
-            overlay.style.setProperty("--mx", x + "%");
-            overlay.style.setProperty("--my", y + "%");
-            overlay.style.setProperty("--circleSize", "35%");
-            overlay.style.backdropFilter = "blur(4px)";
-            overlay.style.webkitBackdropFilter = "blur(4px)";
-        });
-
-        el.addEventListener("mouseleave", function() {
-            overlay.style.setProperty("--circleSize", "0%");
-            overlay.style.backdropFilter = "blur(0px)";
-            overlay.style.webkitBackdropFilter = "blur(0px)";
-        });
-    });
-
-    // ================================================================
-    //  12. Hero Parallax - Mouse tracking
+    var hoverStyle = document.createElement("style");
+    hoverStyle.textContent = ".border-hover-el { position:relative; } .border-hover-el::after { content:''; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; z-index:2; opacity:0; transition:opacity 0.4s ease; box-shadow:inset 0 0 20px 5px rgba(255,154,158,0.2); border:1px solid rgba(161,140,209,0.1); } .border-hover-el:hover::after { opacity:1; }";
+    document.head.appendChild(hoverStyle);
+    document.querySelectorAll(".btn, .filter-btn, .portfolio-item, .about-card, .skill-category").forEach(function(el) { el.className = (el.className || "") + " border-hover-el"; });
+//  12. Hero Parallax - Mouse tracking
     // ================================================================
     const heroSection = document.querySelector(".hero");
     if (heroSection) {
@@ -495,6 +430,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
