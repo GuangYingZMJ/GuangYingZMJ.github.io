@@ -374,43 +374,18 @@ if (navbar && typeof gsap !== "undefined") {
     // ================================================================
     ScrollTrigger.refresh();
     // ================================================================
-            // ================================================================
-    //  10. Section Stagger Reveal
+                // ================================================================
+    //  10. Elastic Hover
     // ================================================================
-    var revealItems = [
-        { sel: ".about-card", start: "top 88%", stagger: 0.15 },
-        { sel: ".skill-category", start: "top 88%", stagger: 0.12 },
-        { sel: ".portfolio-item", start: "top 90%", stagger: 0.1 },
-    ];
-    revealItems.forEach(function(cfg) {
-        var items = document.querySelectorAll(cfg.sel);
-        if (!items.length) return;
-        var parent = items[0].closest("[data-section]") || items[0].parentElement;
-        ScrollTrigger.create({
-            trigger: parent,
-            start: cfg.start,
-            once: true,
-            onEnter: function() {
-                gsap.to(items, { y: 0, opacity: 1, duration: 0.8, stagger: cfg.stagger, ease: "power2.out" });
-            },
+    document.querySelectorAll(".btn, .filter-btn, .nav-link, .portfolio-item, .about-card, .skill-category").forEach(function(el) {
+        el.addEventListener("mouseenter", function() {
+            gsap.to(el, { scale: 1.08, duration: 0.4, ease: "elastic.out(1, 0.4)" });
+        });
+        el.addEventListener("mouseleave", function() {
+            gsap.to(el, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.4)" });
         });
     });
-//  12. Hero Parallax - Mouse tracking
-    // ================================================================
-    const heroSection = document.querySelector(".hero");
-    if (heroSection) {
-        document.addEventListener("mousemove", function(e) {
-            const rect = heroSection.getBoundingClientRect();
-            if (e.clientY < rect.bottom && e.clientY > rect.top) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 2;
-                const y = (e.clientY / window.innerHeight - 0.5) * 2;
-                const bg = heroSection.querySelector(".hero-bg");
-                if (bg) {
-                    bg.style.transform = "translate(" + (x * -25) + "px, " + (y * -15) + "px)";
-                }
-            }
-        });
-    }
+
 }
 
 // Start when DOM is ready
@@ -419,6 +394,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
