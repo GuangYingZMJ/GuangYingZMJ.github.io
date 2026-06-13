@@ -3,7 +3,7 @@
 html { scroll-behavior: smooth; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: #0a0a0f;
+    background: #1a1423;
     color: #e0e0e0;
     line-height: 1.7;
     overflow-x: hidden;
@@ -12,7 +12,7 @@ a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-.accent { color: #ff073a; }
+.accent { color: #ff6f61; }
 .section {
     padding: 100px 0;
     position: relative;
@@ -40,22 +40,22 @@ ul { list-style: none; }
     border: none;
 }
 .btn-primary {
-    background: linear-gradient(135deg, #ff073a, #cc002e);
+    background: linear-gradient(135deg, #ff6f61, #e55a4f);
     color: #fff;
     box-shadow: 0 4px 20px rgba(255,7,58,0.3);
 }
 .btn-primary:hover {
     transform: translateY(-4px) scale(1.02);
-    background: linear-gradient(135deg, #ff3355, #ff073a);
+    background: linear-gradient(135deg, #fd79a8, #ff6f61);
     box-shadow: 0 0 30px rgba(255,7,58,0.5), 0 0 60px rgba(255,7,58,0.15);
 }
 .btn-outline {
     background: transparent;
-    color: #ff073a;
-    border: 2px solid #ff073a;
+    color: #ff6f61;
+    border: 2px solid #ff6f61;
 }
 .btn-outline:hover {
-    background: #ff073a;
+    background: #fdcb6e;
     color: #fff;
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 0 25px rgba(255,7,58,0.4);
@@ -70,7 +70,7 @@ ul { list-style: none; }
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0a0a0f;
+    background: #1a1423;
     pointer-events: all;
 }
 .intro-bg {
@@ -107,7 +107,7 @@ ul { list-style: none; }
     display: inline-block;
     font-size: clamp(2rem, 6vw, 5rem);
     font-weight: 300;
-    color: #ff073a;
+    color: #ff6f61;
     margin: 0 0.3em;
     opacity: 0;
     transform: scale(0);
@@ -135,7 +135,7 @@ ul { list-style: none; }
     transform: translate(-50%, -50%);
     font-size: clamp(4rem, 12vw, 10rem);
     font-weight: 900;
-    color: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.02);
     letter-spacing: 12px;
     pointer-events: none;
     white-space: nowrap;
@@ -191,7 +191,7 @@ ul { list-style: none; }
     background: rgba(10,10,15,0.75);
     backdrop-filter: blur(28px) saturate(1.6);
     -webkit-backdrop-filter: blur(28px) saturate(1.6);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     box-shadow: 0 1px 40px rgba(0,0,0,0.35);
     will-change: transform;
 }
@@ -237,7 +237,7 @@ ul { list-style: none; }
     left: 0;
     width: 0;
     height: 2px;
-    background: #ff073a;
+    background: #ff6f61;
     transition: width 0.3s;
 }
 .nav-link:hover, .nav-link.active { color: #fff; }
@@ -287,7 +287,7 @@ ul { list-style: none; }
 }
 .hero-greeting {
     font-size: 1.1rem;
-    color: #ff073a;
+    color: #ff6f61;
     margin-bottom: 8px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -297,7 +297,7 @@ ul { list-style: none; }
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #fff, #ff3355);
+    background: #fff, #fdcb6e;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -307,7 +307,7 @@ ul { list-style: none; }
     color: #aaa;
     margin-bottom: 20px;
 }
-.hero-tagline .divider { color: #ff073a; margin: 0 8px; }
+.hero-tagline .divider { color: #ff6f61; margin: 0 8px; }
 .hero-desc {
     color: #888;
     font-size: 1rem;
@@ -334,8 +334,8 @@ ul { list-style: none; }
 .scroll-arrow {
     width: 20px;
     height: 20px;
-    border-right: 2px solid #ff073a;
-    border-bottom: 2px solid #ff073a;
+    border-right: 2px solid #ff6f61;
+    border-bottom: 2px solid #ff6f61;
     transform: rotate(45deg);
     opacity: 0.6;
 }
@@ -345,15 +345,15 @@ ul { list-style: none; }
 }
 
 /* ===== 关于我 ===== */
-.about { background: linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 100%); }
+.about { background: linear-gradient(180deg, #1a1423 0%, #1f1a2e 100%); }
 .about-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 .about-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 20px;
     padding: 36px 28px;
     transition: all 0.4s ease;
@@ -373,7 +373,7 @@ ul { list-style: none; }
     color: #bbb;
 }
 .info-list .label {
-    color: #ff073a;
+    color: #ff6f61;
     font-weight: 600;
     min-width: 48px;
     flex-shrink: 0;
@@ -384,7 +384,7 @@ ul { list-style: none; }
     border-radius: 50px;
     background: rgba(255,7,58,0.15);
     border: 1px solid rgba(255,7,58,0.25);
-    color: #ff3355;
+    color: #fdcb6e;
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -393,7 +393,7 @@ ul { list-style: none; }
 
 /* ===== 技能 ===== */
 .skills {
-    background: #0a0a0f;
+    background: #1a1423;
 }
 .skills-grid {
     display: grid;
@@ -401,7 +401,7 @@ ul { list-style: none; }
     gap: 30px;
 }
 .skill-category {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 20px;
     padding: 32px 28px;
@@ -409,7 +409,7 @@ ul { list-style: none; }
 }
 .skill-category:hover {
     border-color: rgba(255,7,58,0.15);
-    box-shadow: 0 10px 40px rgba(124,92,252,0.03);
+    box-shadow: 0 10px 40px rgba(255,111,97,0.03);
 }
 .skill-cat-header {
     display: flex;
@@ -476,10 +476,10 @@ ul { list-style: none; }
     text-align: right;
     font-variant-numeric: tabular-nums;
 }
-.ae-header .skill-fill { background: linear-gradient(90deg, #ff073a, #ff3355); color: #ff3355; }
-.blender-header .skill-fill { background: linear-gradient(90deg, #f97316, #fb923c); color: #fb923c; }
-.software-header .skill-fill { background: linear-gradient(90deg, #06b6d4, #22d3ee); color: #22d3ee; }/* ===== 作品集 ===== */
-.portfolio { background: linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 100%); }
+.ae-header .skill-fill { background: linear-gradient(90deg, #ff6f61, #fdcb6e); color: #fdcb6e; }
+.blender-header .skill-fill { background: linear-gradient(90deg, #fdcb6e, #55efc4); color: #55efc4; }
+.software-header .skill-fill { background: linear-gradient(90deg, #74b9ff, #a29bfe); color: #a29bfe; }/* ===== 作品集 ===== */
+.portfolio { background: linear-gradient(180deg, #1a1423 0%, #1f1a2e 100%); }
 .portfolio-filter {
     display: flex;
     justify-content: center;
@@ -499,7 +499,7 @@ ul { list-style: none; }
 }
 .filter-btn:hover, .filter-btn.active {
     background: rgba(255,7,58,0.15);
-    border-color: #ff073a;
+    border-color: #ff6f61;
     color: #fff;
 }
 .portfolio-grid {
@@ -558,7 +558,7 @@ ul { list-style: none; }
     padding: 4px 14px;
     border-radius: 50px;
     background: rgba(255,7,58,0.25);
-    color: #ff3355;
+    color: #fd79a8;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 1px;
@@ -598,7 +598,7 @@ ul { list-style: none; }
     border-radius: 50%;
     background: rgba(255,7,58,0.15);
     border: 1px solid rgba(255,7,58,0.25);
-    color: #ff3355;
+    color: #fd79a8;
     font-size: 1.3rem;
     cursor: pointer;
     opacity: 0;
@@ -611,7 +611,7 @@ ul { list-style: none; }
     visibility: visible;
 }
 .back-to-top:hover {
-    background: #ff073a;
+    background: #ff6f61;
     color: #fff;
     transform: translateY(-3px);
     box-shadow: 0 0 20px rgba(255,7,58,0.4);

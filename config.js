@@ -111,8 +111,7 @@ const SITE_CONFIG = {
             label: "AE 特效合成",
             desc: "MG 动画 / 粒子光效 / 片头包装",
             thumbClass: "ae-placeholder",
-            // 当你有了作品图片，把下面这行的注释去掉并填上图片路径
-            // image: "assets/ae-work-01.jpg",
+
         },
         {
             category: "blender",
@@ -158,6 +157,7 @@ const SITE_CONFIG = {
     pageTitle: "光影造梦局 · 视觉作品集",
     favicon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2228%22 font-size=%2228%22>✨</text></svg>',
 };
+
 
 
 
