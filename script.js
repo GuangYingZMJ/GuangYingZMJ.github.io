@@ -374,38 +374,27 @@ if (navbar && typeof gsap !== "undefined") {
     // ================================================================
     ScrollTrigger.refresh();
     // ================================================================
-        // ================================================================
-    //  10. Border Glow - Scroll Reveal
+            // ================================================================
+    //  10. Section Stagger Reveal
     // ================================================================
-    document.querySelectorAll(".about-card, .skill-category, .portfolio-item").forEach(function(el) {
-        var wrapper = document.createElement("div");
-        wrapper.style.cssText = "position:relative;overflow:hidden;border-radius:20px;";
-        el.parentNode.insertBefore(wrapper, el);
-        wrapper.appendChild(el);
-
-        var borderGlow = document.createElement("div");
-        borderGlow.style.cssText = "position:absolute;inset:-4px;z-index:5;pointer-events:none;border-radius:22px;opacity:0;box-shadow:0 0 20px 10px #ff9a9e;";
-        wrapper.appendChild(borderGlow);
-
+    var revealItems = [
+        { sel: ".about-card", start: "top 88%", stagger: 0.15 },
+        { sel: ".skill-category", start: "top 88%", stagger: 0.12 },
+        { sel: ".portfolio-item", start: "top 90%", stagger: 0.1 },
+    ];
+    revealItems.forEach(function(cfg) {
+        var items = document.querySelectorAll(cfg.sel);
+        if (!items.length) return;
+        var parent = items[0].closest("[data-section]") || items[0].parentElement;
         ScrollTrigger.create({
-            trigger: wrapper,
-            start: "top 88%",
+            trigger: parent,
+            start: cfg.start,
             once: true,
             onEnter: function() {
-                borderGlow.style.transition = "opacity 1.2s ease-out";
-                borderGlow.style.opacity = "0.7";
-                setTimeout(function() { borderGlow.style.opacity = "0"; }, 1800);
+                gsap.to(items, { y: 0, opacity: 1, duration: 0.8, stagger: cfg.stagger, ease: "power2.out" });
             },
         });
     });
-
-    // ================================================================
-    //  11. Border Hover Blur
-    // ================================================================
-    var hoverStyle = document.createElement("style");
-    hoverStyle.textContent = ".border-hover-el { position:relative; } .border-hover-el::after { content:''; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; z-index:2; opacity:0; transition:opacity 0.4s ease; box-shadow:inset 0 0 20px 5px rgba(255,154,158,0.2); border:1px solid rgba(161,140,209,0.1); } .border-hover-el:hover::after { opacity:1; }";
-    document.head.appendChild(hoverStyle);
-    document.querySelectorAll(".btn, .filter-btn, .portfolio-item, .about-card, .skill-category").forEach(function(el) { el.className = (el.className || "") + " border-hover-el"; });
 //  12. Hero Parallax - Mouse tracking
     // ================================================================
     const heroSection = document.querySelector(".hero");
@@ -430,6 +419,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
