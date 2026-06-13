@@ -109,15 +109,18 @@ if (navbar && typeof gsap !== "undefined") {
             { y: -30, opacity: 0, duration: 0.4 },
             "-=0.4"
         )
-        // Phase 3: Overlay slides up
+        // Phase 3: Overlay fades + blurs out smoothly
         .to(overlay,
             {
-                yPercent: -100,
-                duration: 1.2,
-                ease: "power3.inOut",
+                opacity: 0,
+                scale: 1.05,
+                filter: "blur(12px)",
+                duration: 1.6,
+                ease: "power2.inOut",
             },
             "-=0.3"
-        );
+        )
+        .set(overlay, { display: "none" });
     }
 
     // ================================================================
@@ -378,5 +381,6 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
