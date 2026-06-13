@@ -182,23 +182,15 @@ ul { list-style: none; }
     transition: none !important;
 }/* ===== 导航栏 ===== */
 .navbar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 24px 0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 20px 0;
     background: transparent;
-}
-.navbar.fixed {
-    position: fixed;
-    padding: 14px 0;
-    background: rgba(10,10,15,0.72);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 1px 40px rgba(0,0,0,0.3);
+    border-bottom: 1px solid transparent;
+    will-change: background, backdrop-filter, box-shadow, padding, border-color;
 }
 .nav-container {
     max-width: 1200px;
@@ -248,6 +240,23 @@ ul { list-style: none; }
     border-radius: 2px;
 }
 
+
+/* ===== 导航栏磨砂玻璃层（GSAP 控制） ===== */
+.nav-glass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 999;
+    pointer-events: none;
+    background: rgba(10,10,15,0);
+    backdrop-filter: blur(0px) saturate(1);
+    -webkit-backdrop-filter: blur(0px) saturate(1);
+    border-bottom: 1px solid transparent;
+    will-change: background, backdrop-filter, border-color;
+    transition: none;
+}
 /* ===== Hero ===== */
 .hero {
     min-height: 100vh;
@@ -645,6 +654,7 @@ ul { list-style: none; }
     .hero-name { font-size: 2.2rem; }
     .btn { padding: 12px 28px; font-size: 0.9rem; }
 }
+
 
 
 

@@ -8,14 +8,38 @@
 // ===== 等待 GSAP 加载 =====
 function initAnimations() {
 
-// ===== 导航栏滚动效果（首屏后固定 + 磨砂玻璃） =====
+// ===== 导航栏磨砂玻璃 - GSAP 丝滑过渡 =====
+const navGlass = document.getElementById("navGlass");
 const navbar = document.getElementById("navbar");
 const backToTop = document.getElementById("backToTop");
 
-window.addEventListener("scroll", () => {
-    const heroH = window.innerHeight;
-    const scrolled = window.scrollY > heroH * 0.7;
-    if (navbar) navbar.classList.toggle("fixed", scrolled);
+if (navGlass && typeof gsap !== "undefined") {
+    gsap.set(navGlass, {
+        background: "rgba(10,10,15,0)",
+        backdropFilter: "blur(0px) saturate(1)",
+        borderColor: "transparent",
+    });
+
+    ScrollTrigger.create({
+        trigger: ".hero",
+        start: "top -10%",
+        end: "top -70%",
+        scrub: 1.2,
+        onUpdate: function(self) {
+            var p = self.progress;
+            navGlass.style.background = "rgba(10,10,15," + (p * 0.72) + ")";
+            navGlass.style.backdropFilter = "blur(" + (p * 24) + "px) saturate(" + (1 + p * 0.4) + ")";
+            navGlass.style.borderBottom = p > 0.5 ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent";
+            if (navbar) {
+                var pad = 20 - p * 6;
+                navbar.style.padding = pad + "px 0";
+            }
+        },
+    });
+}
+
+window.addEventListener("scroll", function() {
+    var heroH = window.innerHeight;
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
 });
 
