@@ -3,7 +3,7 @@
 html { scroll-behavior: smooth; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(135deg, #fff5f0 0%, #fff0f5 30%, #f0f8ff 60%, #f5f0ff 100%);
+    background: linear-gradient(135deg, #ffe8e0 0%, #ffd6e0 30%, #d6ecff 60%, #e8d6ff 100%);
     color: #2d2d3a;
     line-height: 1.7;
     overflow-x: hidden;
@@ -120,7 +120,7 @@ ul { list-style: none; }
 .intro-sub {
     font-size: clamp(0.85rem, 1.5vw, 1.1rem);
     letter-spacing: 8px;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.6);
     margin-top: 24px;
     opacity: 0;
     transform: translateY(30px);
@@ -242,7 +242,7 @@ ul { list-style: none; }
 .nav-toggle span {
     width: 24px;
     height: 2px;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.92);
     border-radius: 2px;
     transition: all 0.3s;
 }
@@ -261,9 +261,9 @@ ul { list-style: none; }
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(255,154,158,0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(161,140,209,0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 0%, rgba(253,203,110,0.15) 0%, transparent 40%);
+        radial-gradient(ellipse at 20% 50%, rgba(255,154,158,0.35) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(161,140,209,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(253,203,110,0.25) 0%, transparent 40%);
     z-index: 0;
     will-change: transform;
 }
@@ -376,7 +376,7 @@ ul { list-style: none; }
 
 /* ===== About ===== */
 .about {
-    background: linear-gradient(180deg, rgba(255,245,240,0.5) 0%, rgba(240,248,255,0.5) 100%);
+    background: linear-gradient(180deg, rgba(255,232,224,0.6) 0%, rgba(214,236,255,0.6) 100%);
 }
 .about-grid {
     display: grid;
@@ -384,7 +384,7 @@ ul { list-style: none; }
     gap: 24px;
 }
 .about-card {
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 36px;
@@ -445,7 +445,7 @@ ul { list-style: none; }
 
 /* ===== 技能 ===== */
 .skills {
-    background: linear-gradient(180deg, rgba(240,248,255,0.5) 0%, rgba(245,240,255,0.5) 100%);
+    background: linear-gradient(180deg, rgba(214,236,255,0.6) 0%, rgba(232,214,255,0.6) 100%);
 }
 .skills-grid {
     display: grid;
@@ -453,7 +453,7 @@ ul { list-style: none; }
     gap: 24px;
 }
 .skill-category {
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     overflow: hidden;
@@ -509,7 +509,7 @@ ul { list-style: none; }
 /* Skill header gradients */
 .ae-header { background: linear-gradient(135deg, rgba(255,154,158,0.15), rgba(250,208,196,0.1)); }
 .blender-header { background: linear-gradient(135deg, rgba(161,140,209,0.15), rgba(251,194,235,0.1)); }
-.software-header { background: linear-gradient(135deg, rgba(253,203,110,0.15), rgba(255,154,158,0.1)); }
+.software-header { background: linear-gradient(135deg, rgba(253,203,110,0.25), rgba(255,154,158,0.1)); }
 
 /* Skill fill rainbow gradients */
 .ae-header ~ .skill-items .skill-fill { background: linear-gradient(90deg, #ff9a9e, #fad0c4); }
@@ -537,7 +537,7 @@ ul { list-style: none; }
 
 /* ===== 作品集 ===== */
 .portfolio {
-    background: linear-gradient(180deg, rgba(245,240,255,0.5) 0%, rgba(255,245,240,0.5) 100%);
+    background: linear-gradient(180deg, rgba(232,214,255,0.6) 0%, rgba(255,232,224,0.6) 100%);
 }
 .portfolio-filter {
     display: flex;
@@ -561,7 +561,7 @@ ul { list-style: none; }
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     border-color: transparent;
     color: #2d2d3a;
-    box-shadow: 0 4px 20px rgba(255,154,158,0.25);
+    box-shadow: 0 4px 20px rgba(255,154,158,0.35);
 }
 .portfolio-grid {
     display: grid;
@@ -571,7 +571,7 @@ ul { list-style: none; }
 .portfolio-item {
     border-radius: 16px;
     overflow: hidden;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.9);
     box-shadow: 0 4px 30px rgba(161,140,209,0.06);
@@ -601,7 +601,7 @@ ul { list-style: none; }
 .placeholder-thumb span { font-size: 2.8rem; }
 .ae-placeholder { background: linear-gradient(135deg, rgba(255,154,158,0.15), rgba(250,208,196,0.05)); }
 .blender-placeholder { background: linear-gradient(135deg, rgba(161,140,209,0.15), rgba(251,194,235,0.05)); }
-.viz-placeholder { background: linear-gradient(135deg, rgba(253,203,110,0.15), rgba(85,239,196,0.05)); }
+.viz-placeholder { background: linear-gradient(135deg, rgba(253,203,110,0.25), rgba(85,239,196,0.05)); }
 .portfolio-overlay {
     position: absolute;
     inset: 0;
@@ -717,5 +717,6 @@ ul { list-style: none; }
     .hero-name { font-size: 2.2rem; }
     .btn { padding: 12px 28px; font-size: 0.9rem; }
 }
+
 
 
