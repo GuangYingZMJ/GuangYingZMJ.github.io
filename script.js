@@ -374,7 +374,47 @@ if (navbar && typeof gsap !== "undefined") {
     // ================================================================
     ScrollTrigger.refresh();
     // ================================================================
-    //  10. Hero Parallax - Mouse tracking
+    // ================================================================
+    //  10. Gradual Blur - Scroll Reveal
+    // ================================================================
+    const blurTargets = [
+        { sel: ".about-card", start: "top 85%" },
+        { sel: ".skill-category", start: "top 85%" },
+        { sel: ".portfolio-item", start: "top 88%" },
+        { sel: ".section-head", start: "top 80%" },
+    ];
+    blurTargets.forEach(function(cfg) {
+        document.querySelectorAll(cfg.sel).forEach(function(el) {
+            gsap.set(el, { filter: "blur(16px)", opacity: 0, y: 40 });
+            ScrollTrigger.create({
+                trigger: el, start: cfg.start, once: true,
+                onEnter: function() {
+                    gsap.to(el, { filter: "blur(0px)", opacity: 1, y: 0, duration: 1.2, ease: "power2.out" });
+                },
+            });
+        });
+    });
+
+    // ================================================================
+    //  11. Shape Blur - Hover Effect
+    // ================================================================
+    document.querySelectorAll(".btn, .filter-btn, .nav-link, .portfolio-item, .about-card").forEach(function(el) {
+        el.addEventListener("mouseenter", function(e) {
+            var rect = el.getBoundingClientRect();
+            var x = ((e.clientX - rect.left) / rect.width) * 100;
+            var y = ((e.clientY - rect.top) / rect.height) * 100;
+            el.style.setProperty("--mx", x + "%");
+            el.style.setProperty("--my", y + "%");
+            el.style.setProperty("--mb", "12px");
+            gsap.to(el, { "--ms": "150%", duration: 0.6, ease: "power2.out" });
+        });
+        el.addEventListener("mouseleave", function() {
+            gsap.to(el, { "--ms": "0%", duration: 0.4, ease: "power2.in" });
+        });
+    });
+
+    // ================================================================
+    //  12. Hero Parallax - Mouse tracking
     // ================================================================
     const heroSection = document.querySelector(".hero");
     if (heroSection) {
@@ -398,6 +438,8 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
+
 
 
 

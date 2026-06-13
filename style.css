@@ -759,3 +759,16 @@ ul { list-style: none; }
 
 
 
+
+/* ===== Shape Blur Hover Effect ===== */
+.btn, .filter-btn, .nav-link, .portfolio-item, .about-card {
+    --mx: 50%;
+    --my: 50%;
+    --ms: 0%;
+    --mb: 0px;
+}
+.btn:hover, .filter-btn:hover, .nav-link:hover, .portfolio-item:hover, .about-card:hover {
+    mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--ms), transparent calc(var(--ms) + 20%));
+    -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--ms), transparent calc(var(--ms) + 20%));
+    backdrop-filter: blur(calc(var(--mb)));
+}
