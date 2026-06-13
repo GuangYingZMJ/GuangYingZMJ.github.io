@@ -377,12 +377,13 @@ if (navbar && typeof gsap !== "undefined") {
                 // ================================================================
     //  10. Elastic Hover
     // ================================================================
-    document.querySelectorAll(".btn, .filter-btn, .nav-link, .portfolio-item, .about-card, .skill-category").forEach(function(el) {
+    document.querySelectorAll(".btn, .filter-btn, .portfolio-item, .about-card, .skill-category, .nav-link").forEach(function(el) {
+        el.style.display = "inline-block";
         el.addEventListener("mouseenter", function() {
-            gsap.to(el, { scale: 1.08, duration: 0.4, ease: "elastic.out(1, 0.4)" });
+            gsap.to(el, { scale: 1.1, duration: 0.5, ease: "elastic.out(1, 0.35)", overwrite: "auto" });
         });
         el.addEventListener("mouseleave", function() {
-            gsap.to(el, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.4)" });
+            gsap.to(el, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.35)", overwrite: "auto" });
         });
     });
 
@@ -394,6 +395,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
