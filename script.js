@@ -406,11 +406,11 @@ if (navbar && typeof gsap !== "undefined") {
         wrapper.appendChild(blurOverlay);
 
         // Create gradual blur layers
-        var layers = 6;
+        var layers = 4;
         for (var i = 0; i < layers; i++) {
             var div = document.createElement("div");
             var progress = (i + 1) / layers;
-            var blurVal = Math.pow(2, progress * 4) * 0.0625 * 2.5;
+            var blurVal = Math.pow(2, progress * 3) * 0.0625 * 0.8;
             div.style.cssText = "position:absolute;inset:0;backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);-webkit-backdrop-filter:blur(" + blurVal.toFixed(3) + "rem);z-index:" + (i + 1) + ";opacity:0;transition:opacity 0.6s ease-out;";
             blurOverlay.appendChild(div);
         }
@@ -458,9 +458,9 @@ if (navbar && typeof gsap !== "undefined") {
             var y = ((e.clientY - rect.top) / rect.height) * 100;
             overlay.style.setProperty("--mx", x + "%");
             overlay.style.setProperty("--my", y + "%");
-            overlay.style.setProperty("--circleSize", "60%");
-            overlay.style.backdropFilter = "blur(8px)";
-            overlay.style.webkitBackdropFilter = "blur(8px)";
+            overlay.style.setProperty("--circleSize", "35%");
+            overlay.style.backdropFilter = "blur(4px)";
+            overlay.style.webkitBackdropFilter = "blur(4px)";
         });
 
         el.addEventListener("mouseleave", function() {
@@ -495,6 +495,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
