@@ -280,13 +280,12 @@ ul { list-style: none; }
     width: 120%;
     height: 140%;
     background: 
-        radial-gradient(ellipse at 30% 50%, rgba(255,100,150,0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 30%, rgba(100,200,255,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(200,100,255,0.15) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 50%, rgba(255,80,120,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(80,180,255,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(200,80,255,0.25) 0%, transparent 50%);
     z-index: 0;
     pointer-events: none;
-    animation: prismFloat 20s ease-in-out infinite alternate;
-    mix-blend-mode: screen;
+    transition: background 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @keyframes prismFloat {
@@ -746,6 +745,7 @@ ul { list-style: none; }
     .hero-name { font-size: 2.2rem; }
     .btn { padding: 12px 28px; font-size: 0.9rem; }
 }
+
 
 
 
