@@ -74,7 +74,7 @@ ul { list-style: none; }
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(255,111,97,0.5) 0%, rgba(253,203,110,0.4) 30%, rgba(85,239,196,0.35) 60%, rgba(116,185,255,0.4) 80%, rgba(162,155,254,0.45) 100%);
+    background: linear-gradient(135deg, #d4948f 0%, #d4bf8a 30%, #8fc9b0 60%, #95b8d4 80%, #b8aff0 100%);
     pointer-events: all;
 }
 .intro-bg {
@@ -717,6 +717,7 @@ ul { list-style: none; }
     .hero-name { font-size: 2.2rem; }
     .btn { padding: 12px 28px; font-size: 0.9rem; }
 }
+
 
 
 
