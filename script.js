@@ -8,37 +8,27 @@
 // ===== 等待 GSAP 加载 =====
 function initAnimations() {
 
-// ===== 导航栏磨砂玻璃 - GSAP 丝滑过渡 =====
-const navGlass = document.getElementById("navGlass");
-const navbar = document.getElementById("navbar");
+// ===== backToTop 按钮 =====
 const backToTop = document.getElementById("backToTop");
 
-if (navGlass && typeof gsap !== "undefined") {
-    gsap.set(navGlass, {
-        background: "rgba(10,10,15,0)",
-        backdropFilter: "blur(0px) saturate(1)",
-        borderColor: "transparent",
-    });
+window.addEventListener("scroll", function() {
+    var heroH = window.innerHeight;
+    if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
+});
 
+// ===== 导航栏 - GSAP 微缩放 =====
+const navbar = document.getElementById("navbar");
+if (navbar && typeof gsap !== "undefined") {
     ScrollTrigger.create({
         trigger: ".hero",
-        start: "top -10%",
-        end: "top -70%",
-        scrub: 1.2,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
         onUpdate: function(self) {
-            var p = self.progress;
-            navGlass.style.background = "rgba(10,10,15," + (p * 0.72) + ")";
-            navGlass.style.backdropFilter = "blur(" + (p * 24) + "px) saturate(" + (1 + p * 0.4) + ")";
-            navGlass.style.borderBottom = p > 0.5 ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent";
-            if (navbar) {
-                var pad = 20 - p * 6;
-                navbar.style.padding = pad + "px 0";
-            }
+            navbar.style.transform = "translateY(" + (self.progress * -2) + "px)";
         },
     });
-}
-
-window.addEventListener("scroll", function() {
+}window.addEventListener("scroll", function() {
     var heroH = window.innerHeight;
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
 });
