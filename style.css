@@ -224,13 +224,14 @@ ul { list-style: none; }
     border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 500;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.85);
     transition: all 0.3s;
 }
 .nav-link:hover,
 .nav-link.active {
-    background: linear-gradient(135deg, rgba(255,154,158,0.15), rgba(161,140,209,0.1));
-    color: #2d2d3a;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255,111,97,0.5);
 }
 .nav-toggle {
     display: none;
@@ -412,7 +413,7 @@ ul { list-style: none; }
 }
 .about-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: #2d2d3a; }
 .info-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.info-list li { font-size: 0.95rem; color: rgba(255,255,255,0.75); }
+.info-list li { font-size: 0.95rem; color: rgba(255,255,255,0.85); }
 .info-list .label {
     display: inline-block;
     min-width: 60px;
@@ -483,7 +484,7 @@ ul { list-style: none; }
 .skill-name {
     min-width: 140px;
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.85);
     font-weight: 500;
 }
 .skill-bar-wrap {
@@ -626,7 +627,7 @@ ul { list-style: none; }
     font-weight: 600;
     letter-spacing: 1px;
 }
-.overlay-desc { color: rgba(255,255,255,0.75); font-size: 0.85rem; text-align: center; }
+.overlay-desc { color: rgba(255,255,255,0.85); font-size: 0.85rem; text-align: center; }
 .portfolio-info {
     padding: 20px;
 }
@@ -717,6 +718,7 @@ ul { list-style: none; }
     .hero-name { font-size: 2.2rem; }
     .btn { padding: 12px 28px; font-size: 0.9rem; }
 }
+
 
 
 
