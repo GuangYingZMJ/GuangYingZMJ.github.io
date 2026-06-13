@@ -373,6 +373,31 @@ if (navbar && typeof gsap !== "undefined") {
     //  Refresh ScrollTrigger after everything is rendered
     // ================================================================
     ScrollTrigger.refresh();
+    // ================================================================
+    //  10. Hero Parallax - Mouse tracking
+    // ================================================================
+    const heroBgLayer = document.querySelector(".hero::after");
+    const heroSection = document.querySelector(".hero");
+    if (heroSection) {
+        document.addEventListener("mousemove", function(e) {
+            const rect = heroSection.getBoundingClientRect();
+            if (e.clientY < rect.bottom && e.clientY > rect.top) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                const bg = heroSection.querySelector(".hero-bg");
+                const glow = heroSection.querySelector(".hero-glow");
+                if (bg) {
+                    bg.style.transform = "translate(" + (x * -15) + "px, " + (y * -10) + "px)";
+                }
+                if (glow) {
+                    glow.style.background =
+                        "radial-gradient(ellipse at " + (50 + x * 15) + "% " + (50 + y * 10) + "%, rgba(255,100,150,0.25) 0%, transparent 50%), " +
+                        "radial-gradient(ellipse at " + (50 - x * 10) + "% " + (30 + y * 15) + "%, rgba(100,200,255,0.2) 0%, transparent 50%), " +
+                        "radial-gradient(ellipse at " + (50 + x * 8) + "% " + (70 - y * 12) + "%, rgba(200,100,255,0.2) 0%, transparent 50%)";
+                }
+            }
+        });
+    }
 }
 
 // Start when DOM is ready
@@ -381,6 +406,7 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
+
 
 
 
