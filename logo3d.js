@@ -1,120 +1,287 @@
 /**
- * 3D å…‰å½± Logo - çƒå½¢ + æŸ”å’Œè¾¹ç¼˜
- * é¼ æ ‡æŒ‰ä½æ‹–æ‹½æ—‹è½¬ï¼Œæ¾æ‰‹ååŒ€é€Ÿè‡ªè½¬
+ * ========================================
+ *  ?? 3D ¹âÓ°ÇòÌå Logo ¡ª ¹âÓ°ÔìÃÎ¾Ö
+ *  ¶à²ãÇò¿ÇÊµÏÖÈáºÍ±ßÔµÍ¸Ã÷½¥±ä
+ *  Êó±êÍÏ¶¯Ğı×ª + ×Ô¶¯»ºÂıĞı×ª
+ * ========================================
  */
-(function(){function init(){if(typeof THREE==="undefined"){var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";s.onload=start;document.head.appendChild(s)}else{start()}}function start(){var el=document.getElementById("cubeContainer");if(!el||el._loaded)return;el._loaded=1;while(el.firstChild)el.removeChild(el.firstChild);var size=Math.min(Math.min(el.clientWidth||300,window.innerWidth*0.4),350);if(size<100)size=300;el.style.width=size+"px";el.style.height=size+"px";el.style.margin="0 auto";var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(50,1,0.1,50);camera.position.set(0,0.5,5);camera.lookAt(0,0,0);var renderer=new THREE.WebGLRenderer({alpha:!0,antialias:!0});renderer.setSize(size,size);renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.setClearColor(0,0);el.appendChild(renderer.domElement);var group=new THREE.Group();scene.add(group)
+(function () {
+    function init3DLogo() {
+        if (typeof THREE === "undefined") {
+            var s = document.createElement("script");
+            s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+            s.onload = startScene;
+            document.head.appendChild(s);
+        } else {
+            startScene();
+        }
+    }
 
-// ===== 1. ä¸»çƒä½“ï¼ˆå å¤§éƒ¨åˆ†é€æ˜åº¦ï¼Œæ¥è¿‘100ä¸é€æ˜ï¼‰ =====
-var sphereMat=new THREE.MeshPhysicalMaterial({
-    color:0x00f0ff,emissive:0x00f0ff,emissiveIntensity:0.25,
-    metalness:0.3,roughness:0.05,clearcoat:0.4,clearcoatRoughness:0.3,
-    transparent:!0,opacity:0.97
-})
-var sphere=new THREE.Mesh(new THREE.SphereGeometry(1.2,48,48),sphereMat)
-group.add(sphere)
+    function startScene() {
+        var container = document.getElementById("cubeContainer");
+        if (!container) return;
 
-// ===== 2. å‘å…‰å†…æ ¸å¿ƒ =====
-var coreMat=new THREE.MeshBasicMaterial({
-    color:0xff2d95,transparent:!0,opacity:0.35
-})
-var core=new THREE.Mesh(new THREE.SphereGeometry(0.6,24,24),coreMat)
-group.add(core)
+        var W = container.clientWidth || 300;
+        var H = container.clientHeight || 300;
 
-// ===== 3. å¤–å±‚å…‰æ™•ï¼ˆè¾¹ç¼˜æŸ”å’Œè¿‡æ¸¡ 0â†’å‡ ä¹100ï¼‰ =====
-var glowMat=new THREE.MeshPhysicalMaterial({
-    color:0x00f0ff,emissive:0x00f0ff,emissiveIntensity:0.1,
-    transparent:!0,opacity:0.25,
-    metalness:0,roughness:0.4,
-    side:THREE.BackSide
-})
-var glow=new THREE.Mesh(new THREE.SphereGeometry(1.6,32,32),glowMat)
-group.add(glow)
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 1000);
+        camera.position.set(0, 0.8, 4.5);
 
-// ===== 4. å¤–å±‚åŠé€æ˜å£³ï¼ˆä»è¾¹ç¼˜åˆ°å†…ï¼Œé€æ˜åº¦0â†’100æ¸å˜ï¼Œä½†å¤§éƒ¨åˆ†åŒºåŸŸä¸é€æ˜ï¼‰ =====
-// ç”¨ä¸¤ä¸ªåŠå¾„ç•¥æœ‰å·®å¼‚çš„çƒå£³åˆ¶é€ æŸ”å’Œè¾¹ç¼˜é›¾åŒ–æ•ˆæœ
-for(var i=0;i<3;i++){
-    var r=1.25+i*0.12
-    var op=0.5-i*0.15
-    var shellMat=new THREE.MeshPhysicalMaterial({
-        color:0x00f0ff,emissive:0x00f0ff,emissiveIntensity:0.05,
-        transparent:!0,opacity:Math.max(0,op),
-        metalness:0.2,roughness:0.3,
-        side:THREE.DoubleSide,depthWrite:!1
-    })
-    var shell=new THREE.Mesh(new THREE.SphereGeometry(r,32,32),shellMat)
-    group.add(shell)
-}
+        var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
 
-// ===== 5. è½¨é“å…‰ç¯ =====
-function ring(r,tr,col,rx,ry){
-    var m=new THREE.Mesh(new THREE.TorusGeometry(r,tr,24,48),
-        new THREE.MeshPhysicalMaterial({color:col,emissive:col,emissiveIntensity:0.4,metalness:0.6,roughness:0.3,transparent:!0,opacity:0.5}))
-    m.rotation.x=rx;m.rotation.y=ry;return m
-}
-var rings=[
-    ring(1.8,0.025,0x00f0ff,Math.PI/3,0),
-    ring(2.1,0.02,0xff2d95,Math.PI/1.5,Math.PI/4),
-    ring(1.5,0.015,0xffea00,Math.PI/2.5,-Math.PI/3)
-]
-rings.forEach(function(r){group.add(r)})
+        var group = new THREE.Group();
+        scene.add(group);
 
-// ===== 6. ç²’å­ =====
-var pc=100,g=new THREE.BufferGeometry(),pos=new Float32Array(pc*3),cols=new Float32Array(pc*3)
-var pal=[new THREE.Color(0x00f0ff),new THREE.Color(0xff2d95),new THREE.Color(0xffea00)]
-for(var i=0;i<pc;i++){
-    var t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1),r=2.5+Math.random()*2
-    pos[i*3]=r*Math.sin(p)*Math.cos(t);pos[i*3+1]=r*Math.sin(p)*Math.sin(t);pos[i*3+2]=r*Math.cos(p)
-    var c=pal[Math.floor(Math.random()*3)]
-    cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b
-}
-g.setAttribute("position",new THREE.BufferAttribute(pos,3))
-g.setAttribute("color",new THREE.BufferAttribute(cols,3))
-var pts=new THREE.Points(g,new THREE.PointsMaterial({size:0.05,vertexColors:!0,transparent:!0,opacity:0.6,blending:THREE.AdditiveBlending,sizeAttenuation:!0}))
-group.add(pts)
+        // --- ºËĞÄÄÚ·¢¹âÇò (Éî·ÛÉ«, ²»Í¸Ã÷) ---
+        var coreGeo = new THREE.SphereGeometry(0.7, 48, 48);
+        var coreMat = new THREE.MeshPhysicalMaterial({
+            color: 0xff2d95,
+            emissive: 0xff2d95,
+            emissiveIntensity: 0.6,
+            metalness: 0.0,
+            roughness: 0.3,
+            transparent: true,
+            opacity: 0.95,
+        });
+        var core = new THREE.Mesh(coreGeo, coreMat);
+        group.add(core);
 
-// ===== ç¯å…‰ =====
-var l1=new THREE.PointLight(0x00f0ff,1.2,8);l1.position.set(2.5,2,2);scene.add(l1)
-var l2=new THREE.PointLight(0xff2d95,1.2,8);l2.position.set(-2,-1.5,2.5);scene.add(l2)
-scene.add(new THREE.AmbientLight(0x334466,0.4))
+        // --- Ö÷ÌåÇò (ÇàÉ«, ½Ó½ü²»Í¸Ã÷ 97%) ---
+        var mainGeo = new THREE.SphereGeometry(1.0, 48, 48);
+        var mainMat = new THREE.MeshPhysicalMaterial({
+            color: 0x00f0ff,
+            emissive: 0x00f0ff,
+            emissiveIntensity: 0.3,
+            metalness: 0.1,
+            roughness: 0.2,
+            clearcoat: 0.6,
+            clearcoatRoughness: 0.3,
+            transparent: true,
+            opacity: 0.97,
+        });
+        var mainSphere = new THREE.Mesh(mainGeo, mainMat);
+        group.add(mainSphere);
 
-// ===== é¼ æ ‡æ‹–æ‹½ =====
-var isDragging=!1,prevX=0,prevY=0,dragRotX=0,dragRotY=0,velX=0,velY=0,autoRotY=0
-el.style.cursor="grab"
-function onDown(e){isDragging=!0;el.style.cursor="grabbing";var p=getPos(e);prevX=p.x;prevY=p.y;velX=0;velY=0}
-function onMove(e){if(!isDragging)return;var p=getPos(e),dx=p.x-prevX,dy=p.y-prevY;dragRotY+=dx*0.005;dragRotX+=dy*0.005;dragRotX=Math.max(-1.2,Math.min(1.2,dragRotX));velX=dy*0.005;velY=dx*0.005;prevX=p.x;prevY=p.y}
-function onUp(){isDragging=!1;el.style.cursor="grab"}
-function getPos(e){return e.touches?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY}}
-el.addEventListener("mousedown",onDown)
-document.addEventListener("mousemove",onMove)
-document.addEventListener("mouseup",onUp)
-el.addEventListener("touchstart",function(e){e.preventDefault();onDown(e)},{passive:!1})
-document.addEventListener("touchmove",function(e){if(isDragging)e.preventDefault();onMove(e)},{passive:!1})
-document.addEventListener("touchend",onUp)
+        // --- ÈáºÍ±ßÔµ¹ı¶É²ã (5²ãÍ¬ĞÄÇò¿Ç, µİ¼õÍ¸Ã÷¶È) ---
+        var glowData = [
+            { r: 1.1, op: 0.40, col: 0x00f0ff },
+            { r: 1.2, op: 0.20, col: 0x00ddff },
+            { r: 1.3, op: 0.10, col: 0x00ccff },
+            { r: 1.4, op: 0.05, col: 0x00bbff },
+            { r: 1.5, op: 0.02, col: 0x00aaff },
+        ];
+        glowData.forEach(function (g) {
+            var geo = new THREE.SphereGeometry(g.r, 36, 36);
+            var mat = new THREE.MeshBasicMaterial({
+                color: g.col,
+                transparent: true,
+                opacity: g.op,
+                depthWrite: false,
+                side: THREE.BackSide,
+            });
+            group.add(new THREE.Mesh(geo, mat));
+        });
 
-// ===== åŠ¨ç”» =====
-var time=0;
-(function loop(){requestAnimationFrame(loop);time+=0.01
-if(!isDragging){if(Math.abs(velY)>0.0001||Math.abs(velX)>0.0001){dragRotY+=velY;dragRotX+=velX;dragRotX=Math.max(-1.2,Math.min(1.2,dragRotX));velY*=0.95;velX*=0.95}else{velY=0;velX=0};autoRotY+=0.003}
-group.rotation.y=autoRotY+dragRotY;group.rotation.x=dragRotX
+        // --- ¹ìµÀ¹â»· ---
+        function makeRing(r, tr, col, rx, ry) {
+            var g = new THREE.TorusGeometry(r, tr, 32, 64);
+            var m = new THREE.MeshPhysicalMaterial({
+                color: col,
+                emissive: col,
+                emissiveIntensity: 0.5,
+                metalness: 0.8,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.7,
+            });
+            var mesh = new THREE.Mesh(g, m);
+            mesh.rotation.x = rx;
+            mesh.rotation.y = ry;
+            return mesh;
+        }
+        var r1 = makeRing(1.7, 0.025, 0x00f0ff, Math.PI / 3, 0);
+        var r2 = makeRing(2.0, 0.02, 0xff2d95, Math.PI / 1.5, Math.PI / 4);
+        var r3 = makeRing(1.4, 0.015, 0xffea00, Math.PI / 2.5, -Math.PI / 3);
+        group.add(r1);
+        group.add(r2);
+        group.add(r3);
 
-// çƒä½“è„‰å†²
-var p=Math.sin(time)*0.1+0.9
-sphereMat.emissiveIntensity=0.2+p*0.2
-coreMat.opacity=0.25+Math.sin(time*1.5)*0.12
+        // --- Á£×Ó (¼õÉÙµ½ 100 ¸ö, ÓÅ»¯ĞÔÄÜ) ---
+        var pCount = 100;
+        var pGeo = new THREE.BufferGeometry();
+        var pos = new Float32Array(pCount * 3);
+        var pcols = new Float32Array(pCount * 3);
+        var cC = new THREE.Color(0x00f0ff),
+            cP = new THREE.Color(0xff2d95),
+            cY = new THREE.Color(0xffea00);
+        var pals = [cC, cP, cY];
+        for (var i = 0; i < pCount; i++) {
+            var t = Math.random() * Math.PI * 2;
+            var p = Math.acos(2 * Math.random() - 1);
+            var r = 2.3 + Math.random() * 1.8;
+            pos[i * 3] = r * Math.sin(p) * Math.cos(t);
+            pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t);
+            pos[i * 3 + 2] = r * Math.cos(p);
+            var col = pals[Math.floor(Math.random() * 3)];
+            pcols[i * 3] = col.r;
+            pcols[i * 3 + 1] = col.g;
+            pcols[i * 3 + 2] = col.b;
+        }
+        pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        pGeo.setAttribute("color", new THREE.BufferAttribute(pcols, 3));
+        var pMat = new THREE.PointsMaterial({
+            size: 0.06,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true,
+        });
+        var particles = new THREE.Points(pGeo, pMat);
+        group.add(particles);
 
-// å…‰ç¯è‡ªè½¬
-rings[0].rotation.z+=0.01;rings[1].rotation.x+=0.008;rings[1].rotation.z+=0.005
-rings[2].rotation.y+=0.012;rings[2].rotation.x+=0.006
+        // --- µÆ¹â ---
+        var l1 = new THREE.PointLight(0x00f0ff, 1.5, 10);
+        l1.position.set(3, 2, 2);
+        scene.add(l1);
+        var l2 = new THREE.PointLight(0xff2d95, 1.5, 10);
+        l2.position.set(-2, -2, 3);
+        scene.add(l2);
+        scene.add(new THREE.AmbientLight(0x224466, 0.3));
 
-// é¢œè‰²æ¸å˜
-var hue=0.55+Math.sin(time*0.25)*0.12
-var hc=new THREE.Color().setHSL(hue,0.85,0.5)
-sphereMat.color.copy(hc);sphereMat.emissive.copy(hc)
-glowMat.color.copy(hc);glowMat.emissive.copy(hc)
+        // --- Êó±êÍÏ×§Ğı×ª½»»¥ (²»ÊÇĞüÍ£, Ğè°´×¡ÍÏ×§) ---
+        var isDragging = false;
+        var prevMouse = { x: 0, y: 0 };
+        var targetRot = { x: 0, y: 0 };
+        var currentRot = { x: 0, y: 0 };
+        var velocity = { x: 0, y: 0 };
 
-// ç¯å…‰ç¯ç»•
-l1.position.set(Math.sin(time*0.6)*2.5,1.5+Math.sin(time*0.4)*0.5,Math.cos(time*0.6)*2.5)
-l2.position.set(Math.sin(time*0.4+2)*2.5,-1+Math.sin(time*0.3)*0.5,Math.cos(time*0.4+2)*2.5)
+        container.addEventListener("mousedown", function (e) {
+            isDragging = true;
+            prevMouse.x = e.clientX;
+            prevMouse.y = e.clientY;
+            velocity.x = 0;
+            velocity.y = 0;
+        });
 
-pts.rotation.y+=0.001;renderer.render(scene,camera)})()}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();
+        document.addEventListener("mousemove", function (e) {
+            if (!isDragging) return;
+            var dx = e.clientX - prevMouse.x;
+            var dy = e.clientY - prevMouse.y;
+            // ÁéÃô¶È 0.005, ¸úÈËÑÛ×ª¶¯Æ¥Åä
+            targetRot.y += dx * 0.005;
+            targetRot.x += dy * 0.005;
+            // ÏŞÖÆ´¹Ö±Ğı×ª½Ç¶È±ÜÃâ·­×ª
+            targetRot.x = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetRot.x));
+            velocity.x = dy * 0.005;
+            velocity.y = dx * 0.005;
+            prevMouse.x = e.clientX;
+            prevMouse.y = e.clientY;
+        });
+
+        document.addEventListener("mouseup", function () {
+            isDragging = false;
+        });
+
+        // --- ´¥ÃşÖ§³Ö ---
+        container.addEventListener("touchstart", function (e) {
+            var t = e.touches[0];
+            isDragging = true;
+            prevMouse.x = t.clientX;
+            prevMouse.y = t.clientY;
+            velocity.x = 0;
+            velocity.y = 0;
+        }, { passive: true });
+
+        document.addEventListener("touchmove", function (e) {
+            if (!isDragging) return;
+            var t = e.touches[0];
+            var dx = t.clientX - prevMouse.x;
+            var dy = t.clientY - prevMouse.y;
+            targetRot.y += dx * 0.005;
+            targetRot.x += dy * 0.005;
+            targetRot.x = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetRot.x));
+            velocity.x = dy * 0.005;
+            velocity.y = dx * 0.005;
+            prevMouse.x = t.clientX;
+            prevMouse.y = t.clientY;
+        }, { passive: true });
+
+        document.addEventListener("touchend", function () {
+            isDragging = false;
+        }, { passive: true });
+
+        // --- ¶¯»­Ñ­»· ---
+        var time = 0;
+        var autoRotSpeed = 0.003;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            if (!isDragging) {
+                // ×Ô¶¯»ºÂıĞı×ª + ¹ßĞÔË¥¼õ
+                velocity.x *= 0.95;
+                velocity.y *= 0.95;
+                targetRot.y += autoRotSpeed + velocity.y;
+                targetRot.x += velocity.x;
+                targetRot.x = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetRot.x));
+            }
+
+            // Æ½»¬¸úËæ target
+            currentRot.x += (targetRot.x - currentRot.x) * 0.08;
+            currentRot.y += (targetRot.y - currentRot.y) * 0.08;
+            group.rotation.x = currentRot.x;
+            group.rotation.y = currentRot.y;
+
+            // Âö³å·¢¹â
+            var pulse = Math.sin(time * 1.5) * 0.15 + 0.85;
+            mainMat.emissiveIntensity = 0.2 + pulse * 0.25;
+            coreMat.emissiveIntensity = 0.4 + pulse * 0.3;
+            coreMat.opacity = 0.85 + Math.sin(time * 2) * 0.1;
+
+            // ¹â»·Ğı×ª
+            r1.rotation.z += 0.008;
+            r2.rotation.x += 0.006;
+            r2.rotation.z += 0.004;
+            r3.rotation.y += 0.01;
+            r3.rotation.x += 0.005;
+
+            // ÑÕÉ«»ºÂıÑ­»· (¹âÓ°±ä»Ã)
+            var hue = 0.55 + Math.sin(time * 0.3) * 0.15;
+            var hCol = new THREE.Color().setHSL(hue, 0.9, 0.5);
+            mainMat.color.copy(hCol);
+            mainMat.emissive.copy(hCol);
+
+            // µÆ¹â¶¯Ì¬Ğı×ª
+            l1.position.set(Math.sin(time * 0.7) * 3, 1.5 + Math.sin(time * 0.5) * 0.5, Math.cos(time * 0.7) * 3);
+            l2.position.set(Math.sin(time * 0.5 + 2) * 3, -1 + Math.sin(time * 0.4) * 0.5, Math.cos(time * 0.5 + 2) * 3);
+
+            particles.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener("resize", function () {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        if (window.innerWidth < 768) {
+            camera.position.set(0, 0.8, 5.5);
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init3DLogo);
+    } else {
+        init3DLogo();
+    }
+})();
