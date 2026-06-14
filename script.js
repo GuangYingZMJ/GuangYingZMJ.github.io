@@ -1,3 +1,6 @@
+// ===== 刷新后回到顶部 =====
+history.scrollRestoration = "manual";
+window.scrollTo(0, 0);
 /**
  * ========================================
  *  🎬  GSAP 动画引擎
