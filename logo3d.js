@@ -20,13 +20,15 @@
         var container = document.getElementById("cubeContainer");
         if (!container) return;
 
-        var W = container.clientWidth || 200;
-        var H = container.clientHeight || 200;
+        var W = container.clientWidth || 300;
+        var H = container.clientHeight || 300;
 
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 1000);
         camera.position.set(3, 2, 5);
 
+        // Clear container (remove old cube markup if any)
+        while (container.firstChild) container.removeChild(container.firstChild);
         var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(W, H);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
