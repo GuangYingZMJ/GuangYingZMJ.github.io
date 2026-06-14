@@ -1,14 +1,14 @@
 /**
  * ========================================
- *  ??  GSAP ��������
- *  ���� Opening + ScrollTrigger ȫ��Ч
+ *  🎬  GSAP 动画引擎
+ *  首屏 Opening + ScrollTrigger 全动效
  * ========================================
  */
 
-// ===== �ȴ� GSAP ���� =====
+// ===== 等待 GSAP 加载 =====
 function initAnimations() {
 
-// ===== backToTop ��ť =====
+// ===== backToTop 按钮 =====
 const backToTop = document.getElementById("backToTop");
 
 window.addEventListener("scroll", function() {
@@ -16,10 +16,10 @@ window.addEventListener("scroll", function() {
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
 });
 backToTop.addEventListener("click", function() {
-    document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// ===== ������ - GSAP ΢���� =====
+// ===== 导航栏 - GSAP 微缩放 =====
 const navbar = document.getElementById("navbar");
 if (navbar && typeof gsap !== "undefined") {
     ScrollTrigger.create({
@@ -31,7 +31,13 @@ if (navbar && typeof gsap !== "undefined") {
             navbar.style.transform = "translateY(" + (self.progress * -2) + "px)";
         },
     });
-}
+}window.addEventListener("scroll", function() {
+    var heroH = window.innerHeight;
+    if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
+});
+backToTop.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 
     if (typeof gsap === "undefined") {
@@ -42,7 +48,7 @@ if (navbar && typeof gsap !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
     // ================================================================
-    //  1. ���� Opening Animation
+    //  1. 首屏 Opening Animation
     // ================================================================
     const overlay = document.getElementById("introOverlay");
     const letters = document.querySelectorAll(".intro-letter");
@@ -348,24 +354,7 @@ if (navbar && typeof gsap !== "undefined") {
                 scrub: 1,
             },
         });
-    }
-
-    // ================================================================
-    //  9. Cube subtle floating on scroll
-    // ================================================================
-    const cube = document.querySelector(".cube");
-    if (cube) {
-        ScrollTrigger.create({
-            trigger: ".hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-            onUpdate: (self) => {
-                gsap.set(cube, {
-                    rotationX: -20 + self.progress * 10,
-                    rotationY: self.progress * 180,
-                });
-            },
+    },
         });
     }
 
@@ -395,7 +384,6 @@ if (document.readyState === "loading") {
 } else {
     initAnimations();
 }
-
 
 
 
