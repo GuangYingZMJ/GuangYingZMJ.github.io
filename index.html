@@ -1,18 +1,17 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <script>history.scrollRestoration="manual";window.scrollTo(0,0)</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title id="pageTitle">å…‰å½±é€ æ¢¦å±€ Â· è§†è§‰ä½œå“é›†</title>
-    <meta name="description" content="å…‰å½±é€ æ¢¦å±€ - AE ç‰¹æ•ˆå¸ˆ / Blender 3D å»ºæ¨¡å¸ˆï¼Œä¸“æ³¨å½±è§†åŽæœŸä¸Žä¸‰ç»´å¯è§†åŒ–åˆ›ä½œã€‚" />
-    <meta property="og:title" content="å…‰å½±é€ æ¢¦å±€ Â· è§†è§‰ä½œå“é›†" />
-    <meta property="og:description" content="å…‰å½±é€ æ¢¦å±€ Â· AE ç‰¹æ•ˆ / Blender 3D å»ºæ¨¡ / æµ‹ç»˜å¯è§†åŒ–" />
+    <title id="pageTitle">¹âÓ°ÔìÃÎ¾Ö ¡¤ ÊÓ¾õ×÷Æ·¼¯</title>
+    <meta name="description" content="¹âÓ°ÔìÃÎ¾Ö - AE ÌØÐ§Ê¦ / Blender 3D ½¨Ä£Ê¦£¬×¨×¢Ó°ÊÓºóÆÚÓëÈýÎ¬¿ÉÊÓ»¯´´×÷¡£" />
+    <meta property="og:title" content="¹âÓ°ÔìÃÎ¾Ö ¡¤ ÊÓ¾õ×÷Æ·¼¯" />
+    <meta property="og:description" content="¹âÓ°ÔìÃÎ¾Ö ¡¤ AE ÌØÐ§ / Blender 3D ½¨Ä£ / ²â»æ¿ÉÊÓ»¯" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://GuangYingZMJ.github.io/" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>âœ¨</text></svg>"/>
-    <link rel="stylesheet" href="style.css?v=202606141" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>?</text></svg>"/>
+    <link rel="stylesheet" href="style.css?v=20260613225610" />
 </head>
 <body>
 
@@ -36,16 +35,16 @@
                 <span class="intro-letter" data-index="10">M</span>
                 <span class="intro-letter" data-index="11">J</span>
             </div>
-            <div class="intro-sub" id="introSub">AE Â· BLENDER Â· 3D VISION</div>
+            <div class="intro-sub" id="introSub">AE ¡¤ BLENDER ¡¤ 3D VISION</div>
         </div>
     </div>
 
-    <!-- ===== å¯¼èˆªæ  ===== -->
+    <!-- ===== µ¼º½À¸ ===== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo" id="navLogo">CY<span class="accent">W</span></a>
             <ul class="nav-menu" id="navMenu"></ul>
-            <div class="nav-toggle" id="navToggle" aria-label="èœå•">
+            <div class="nav-toggle" id="navToggle" aria-label="²Ëµ¥">
                 <span></span><span></span><span></span>
             </div>
         </div>
@@ -56,58 +55,67 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <div class="hero-text">
-                <p class="hero-greeting" id="heroGreeting">ä½ å¥½ï¼Œæˆ‘æ˜¯</p>
-                <h1 class="hero-name" id="heroName">å¸¸é€¸æ–‡</h1>
-                <p class="hero-tagline" id="heroTagline">AE ç‰¹æ•ˆå¸ˆ <span class="divider">|</span> Blender 3D å»ºæ¨¡</p>
+                <p class="hero-greeting" id="heroGreeting">ÄãºÃ£¬ÎÒÊÇ</p>
+                <h1 class="hero-name" id="heroName">³£ÒÝÎÄ</h1>
+                <p class="hero-tagline" id="heroTagline">AE ÌØÐ§Ê¦ <span class="divider">|</span> Blender 3D ½¨Ä£</p>
                 <p class="hero-desc" id="heroDesc"></p>
                 <div class="hero-actions" id="heroActions"></div>
             </div>
             <div class="hero-visual">
-                <div class="cube-container" id="cubeContainer"></div>
+                <div class="cube-container" id="cubeContainer">
+                    <div class="cube">
+                        <div class="cube-face front"></div>
+                        <div class="cube-face back"></div>
+                        <div class="cube-face right"></div>
+                        <div class="cube-face left"></div>
+                        <div class="cube-face top"></div>
+                        <div class="cube-face bottom"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="scroll-indicator">
-            <span>å‘ä¸‹æ»šåŠ¨</span>
+            <span>ÏòÏÂ¹ö¶¯</span>
             <div class="scroll-arrow"></div>
         </div>
     </section>
 
-    <!-- ===== å…³äºŽæˆ‘ ===== -->
+    <!-- ===== ¹ØÓÚÎÒ ===== -->
     <section class="section about" id="about" data-section="about">
         <div class="container">
             <div class="section-head">
                 <div class="section-en-title" data-en="about">ABOUT</div>
-                <h2 class="section-title">å…³äºŽ<span class="accent">æˆ‘</span></h2>
-                <p class="section-subtitle">ä¸ªäººç®€ä»‹ Â· ä»Žä¸šç»åŽ† Â· ä»¥åˆ›æ„ä¸ºæ ¸å¿ƒçš„è§†è§‰è¡¨è¾¾ç†å¿µ</p>
+                <h2 class="section-title">¹ØÓÚ<span class="accent">ÎÒ</span></h2>
+                <p class="section-subtitle">¸öÈË¼ò½é ¡¤ ´ÓÒµ¾­Àú ¡¤ ÒÔ´´ÒâÎªºËÐÄµÄÊÓ¾õ±í´ïÀíÄî</p>
             </div>
             <div class="about-grid" id="aboutGrid"></div>
         </div>
     </section>
 
-    <!-- ===== æŠ€èƒ½ ===== -->
+    <!-- ===== ¼¼ÄÜ ===== -->
     <section class="section skills" id="skills" data-section="skills">
         <div class="container">
             <div class="section-head">
                 <div class="section-en-title" data-en="skills">SKILLS</div>
-                <h2 class="section-title">æ ¸å¿ƒ<span class="accent">æŠ€èƒ½</span></h2>
-                <p class="section-subtitle">AE ç‰¹æ•ˆåˆæˆ Â· BLENDER ä¸‰ç»´å»ºæ¨¡ Â· C4D / UE / MARVELOUS DESIGNER</p>
+                <h2 class="section-title">ºËÐÄ<span class="accent">¼¼ÄÜ</span></h2>
+                <p class="section-subtitle">AE ÌØÐ§ºÏ³É ¡¤ BLENDER ÈýÎ¬½¨Ä£ ¡¤ C4D / UE / MARVELOUS DESIGNER</p>
             </div>
             <div class="skills-grid" id="skillsGrid"></div>
         </div>
     </section>
 
-    <!-- ===== ä½œå“é›† ===== -->
+    <!-- ===== ×÷Æ·¼¯ ===== -->
     <section class="section portfolio" id="portfolio" data-section="portfolio">
         <div class="container">
             <div class="section-head">
                 <div class="section-en-title" data-en="works">WORKS</div>
-                <h2 class="section-title">æˆ‘çš„<span class="accent">ä½œå“</span></h2>
-                <p class="section-subtitle">AE ç‰¹æ•ˆ Â· 3D å»ºæ¨¡ Â· UE5 åœºæ™¯æ­å»º</p>
+                <h2 class="section-title">ÎÒµÄ<span class="accent">×÷Æ·</span></h2>
+                <p class="section-subtitle">AE ÌØÐ§ ¡¤ 3D ½¨Ä£ ¡¤ UE5 ³¡¾°´î½¨</p>
             </div>
             <div class="portfolio-filter" id="portfolioFilter"></div>
             <div class="portfolio-grid" id="portfolioGrid"></div>
             <div class="portfolio-note">
-                <p>ðŸŽ¬ æ›´å¤šä½œå“æŒç»­æ›´æ–°ä¸­ Â· åˆä½œè”ç³»è¯·è§ä¸Šæ–¹</p>
+                <p>?? ¸ü¶à×÷Æ·³ÖÐø¸üÐÂÖÐ ¡¤ ºÏ×÷ÁªÏµÇë¼ûÉÏ·½</p>
             </div>
         </div>
     </section>
@@ -115,25 +123,25 @@
     <!-- ===== Footer ===== -->
     <footer class="footer">
         <div class="container">
-            <p id="footerText">&copy; 2026 å¸¸é€¸æ–‡ Â· ç”¨ <span class="accent">â¤ï¸</span> æ‰“é€ </p>
+            <p id="footerText">&copy; 2026 ³£ÒÝÎÄ ¡¤ ÓÃ <span class="accent">??</span> ´òÔì</p>
         </div>
     </footer>
 
-    <!-- ===== å›žåˆ°é¡¶éƒ¨ ===== -->
-    <button class="back-to-top" id="backToTop" aria-label="å›žåˆ°é¡¶éƒ¨">â†‘</button>
+    <!-- ===== »Øµ½¶¥²¿ ===== -->
+    <button class="back-to-top" id="backToTop" aria-label="»Øµ½¶¥²¿">¡ü</button>
 
-    <!-- ===== è„šæœ¬åŠ è½½é¡ºåºï¼šå…ˆé…ç½® â†’ å†æ¸²æŸ“ â†’ æœ€åŽäº¤äº’ ===== -->
+    <!-- ===== ½Å±¾¼ÓÔØË³Ðò£ºÏÈÅäÖÃ ¡ú ÔÙäÖÈ¾ ¡ú ×îºó½»»¥ ===== -->
     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+    <script src="logo3d.js?v=2026061401"></script>
     <script src="config.js?v=20260613225610"></script>
-    <script src="hero-bg.js?v=202606141"></script>
-    <script src="render.js?v=202606141"></script>
-    <script src="logo3d.js?v=202606141"></script>
-    <script src="script.js?v=202606141"></script>
+    <script src="render.js?v=20260613225610"></script>
+    <script src="script.js?v=20260613225610"></script>
 </body>
 </html>
+
 
 
 
