@@ -1,8 +1,8 @@
 /**
  * ========================================
- *  ?? 3D ¹âÓ°ÇòÌå Logo ¡ª ¹âÓ°ÔìÃÎ¾Ö
- *  ¶à²ãÇò¿ÇÊµÏÖÈáºÍ±ßÔµÍ¸Ã÷½¥±ä
- *  Êó±êÍÏ¶¯Ğı×ª + ×Ô¶¯»ºÂıĞı×ª
+ *  ğŸŒŸ 3D å…‰å½±çƒä½“ Logo â€” å…‰å½±é€ æ¢¦å±€
+ *  å¤šå±‚çƒå£³å®ç°æŸ”å’Œè¾¹ç¼˜é€æ˜æ¸å˜
+ *  é¼ æ ‡æ‹–åŠ¨æ—‹è½¬ + è‡ªåŠ¨ç¼“æ…¢æ—‹è½¬
  * ========================================
  */
 (function () {
@@ -38,7 +38,7 @@
         var group = new THREE.Group();
         scene.add(group);
 
-        // --- ºËĞÄÄÚ·¢¹âÇò (Éî·ÛÉ«, ²»Í¸Ã÷) ---
+        // Core glow sphere (deep pink, almost opaque)
         var coreGeo = new THREE.SphereGeometry(0.7, 48, 48);
         var coreMat = new THREE.MeshPhysicalMaterial({
             color: 0xff2d95,
@@ -52,7 +52,7 @@
         var core = new THREE.Mesh(coreGeo, coreMat);
         group.add(core);
 
-        // --- Ö÷ÌåÇò (ÇàÉ«, ½Ó½ü²»Í¸Ã÷ 97%) ---
+        // Main sphere (cyan, 97% opaque)
         var mainGeo = new THREE.SphereGeometry(1.0, 48, 48);
         var mainMat = new THREE.MeshPhysicalMaterial({
             color: 0x00f0ff,
@@ -68,7 +68,7 @@
         var mainSphere = new THREE.Mesh(mainGeo, mainMat);
         group.add(mainSphere);
 
-        // --- ÈáºÍ±ßÔµ¹ı¶É²ã (5²ãÍ¬ĞÄÇò¿Ç, µİ¼õÍ¸Ã÷¶È) ---
+        // Soft edge transition layers (5 concentric shells, decreasing opacity)
         var glowData = [
             { r: 1.1, op: 0.40, col: 0x00f0ff },
             { r: 1.2, op: 0.20, col: 0x00ddff },
@@ -88,7 +88,7 @@
             group.add(new THREE.Mesh(geo, mat));
         });
 
-        // --- ¹ìµÀ¹â»· ---
+        // Rings
         function makeRing(r, tr, col, rx, ry) {
             var g = new THREE.TorusGeometry(r, tr, 32, 64);
             var m = new THREE.MeshPhysicalMaterial({
@@ -112,7 +112,7 @@
         group.add(r2);
         group.add(r3);
 
-        // --- Á£×Ó (¼õÉÙµ½ 100 ¸ö, ÓÅ»¯ĞÔÄÜ) ---
+        // Particles (100 for performance)
         var pCount = 100;
         var pGeo = new THREE.BufferGeometry();
         var pos = new Float32Array(pCount * 3);
@@ -146,7 +146,7 @@
         var particles = new THREE.Points(pGeo, pMat);
         group.add(particles);
 
-        // --- µÆ¹â ---
+        // Lights
         var l1 = new THREE.PointLight(0x00f0ff, 1.5, 10);
         l1.position.set(3, 2, 2);
         scene.add(l1);
@@ -155,7 +155,7 @@
         scene.add(l2);
         scene.add(new THREE.AmbientLight(0x224466, 0.3));
 
-        // --- Êó±êÍÏ×§Ğı×ª½»»¥ (²»ÊÇĞüÍ£, Ğè°´×¡ÍÏ×§) ---
+        // Mouse drag interaction (not hover, requires drag)
         var isDragging = false;
         var prevMouse = { x: 0, y: 0 };
         var targetRot = { x: 0, y: 0 };
@@ -174,10 +174,8 @@
             if (!isDragging) return;
             var dx = e.clientX - prevMouse.x;
             var dy = e.clientY - prevMouse.y;
-            // ÁéÃô¶È 0.005, ¸úÈËÑÛ×ª¶¯Æ¥Åä
             targetRot.y += dx * 0.005;
             targetRot.x += dy * 0.005;
-            // ÏŞÖÆ´¹Ö±Ğı×ª½Ç¶È±ÜÃâ·­×ª
             targetRot.x = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetRot.x));
             velocity.x = dy * 0.005;
             velocity.y = dx * 0.005;
@@ -189,7 +187,7 @@
             isDragging = false;
         });
 
-        // --- ´¥ÃşÖ§³Ö ---
+        // Touch support
         container.addEventListener("touchstart", function (e) {
             var t = e.touches[0];
             isDragging = true;
@@ -217,7 +215,7 @@
             isDragging = false;
         }, { passive: true });
 
-        // --- ¶¯»­Ñ­»· ---
+        // Animation loop
         var time = 0;
         var autoRotSpeed = 0.003;
 
@@ -226,7 +224,6 @@
             time += 0.01;
 
             if (!isDragging) {
-                // ×Ô¶¯»ºÂıĞı×ª + ¹ßĞÔË¥¼õ
                 velocity.x *= 0.95;
                 velocity.y *= 0.95;
                 targetRot.y += autoRotSpeed + velocity.y;
@@ -234,32 +231,27 @@
                 targetRot.x = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetRot.x));
             }
 
-            // Æ½»¬¸úËæ target
             currentRot.x += (targetRot.x - currentRot.x) * 0.08;
             currentRot.y += (targetRot.y - currentRot.y) * 0.08;
             group.rotation.x = currentRot.x;
             group.rotation.y = currentRot.y;
 
-            // Âö³å·¢¹â
             var pulse = Math.sin(time * 1.5) * 0.15 + 0.85;
             mainMat.emissiveIntensity = 0.2 + pulse * 0.25;
             coreMat.emissiveIntensity = 0.4 + pulse * 0.3;
             coreMat.opacity = 0.85 + Math.sin(time * 2) * 0.1;
 
-            // ¹â»·Ğı×ª
             r1.rotation.z += 0.008;
             r2.rotation.x += 0.006;
             r2.rotation.z += 0.004;
             r3.rotation.y += 0.01;
             r3.rotation.x += 0.005;
 
-            // ÑÕÉ«»ºÂıÑ­»· (¹âÓ°±ä»Ã)
             var hue = 0.55 + Math.sin(time * 0.3) * 0.15;
             var hCol = new THREE.Color().setHSL(hue, 0.9, 0.5);
             mainMat.color.copy(hCol);
             mainMat.emissive.copy(hCol);
 
-            // µÆ¹â¶¯Ì¬Ğı×ª
             l1.position.set(Math.sin(time * 0.7) * 3, 1.5 + Math.sin(time * 0.5) * 0.5, Math.cos(time * 0.7) * 3);
             l2.position.set(Math.sin(time * 0.5 + 2) * 3, -1 + Math.sin(time * 0.4) * 0.5, Math.cos(time * 0.5 + 2) * 3);
 
