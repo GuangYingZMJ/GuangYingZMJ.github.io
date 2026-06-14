@@ -1,14 +1,14 @@
 /**
  * ========================================
- *  ??  GSAP ¶¯»­ÒýÇæ
- *  Ê×ÆÁ Opening + ScrollTrigger È«¶¯Ð§
+ *  ??  GSAP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  ï¿½ï¿½ï¿½ï¿½ Opening + ScrollTrigger È«ï¿½ï¿½Ð§
  * ========================================
  */
 
-// ===== µÈ´ý GSAP ¼ÓÔØ =====
+// ===== ï¿½È´ï¿½ GSAP ï¿½ï¿½ï¿½ï¿½ =====
 function initAnimations() {
 
-// ===== backToTop °´Å¥ =====
+// ===== backToTop ï¿½ï¿½Å¥ =====
 const backToTop = document.getElementById("backToTop");
 
 window.addEventListener("scroll", function() {
@@ -19,7 +19,7 @@ backToTop.addEventListener("click", function() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 });
 
-// ===== µ¼º½À¸ - GSAP Î¢Ëõ·Å =====
+// ===== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - GSAP Î¢ï¿½ï¿½ï¿½ï¿½ =====
 const navbar = document.getElementById("navbar");
 if (navbar && typeof gsap !== "undefined") {
     ScrollTrigger.create({
@@ -42,7 +42,7 @@ if (navbar && typeof gsap !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
     // ================================================================
-    //  1. Ê×ÆÁ Opening Animation
+    //  1. ï¿½ï¿½ï¿½ï¿½ Opening Animation
     // ================================================================
     const overlay = document.getElementById("introOverlay");
     const letters = document.querySelectorAll(".intro-letter");
