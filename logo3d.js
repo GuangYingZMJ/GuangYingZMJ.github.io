@@ -9,7 +9,7 @@
     function init3DLogo() {
         if (typeof THREE === "undefined") {
             var s = document.createElement("script");
-            s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+            s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js";
             s.onload = startScene;
             document.head.appendChild(s);
         } else {
