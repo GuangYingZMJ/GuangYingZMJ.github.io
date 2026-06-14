@@ -16,7 +16,7 @@ window.addEventListener("scroll", function() {
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
 });
 backToTop.addEventListener("click", function() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 });
 
 // ===== 导航栏 - GSAP 微缩放 =====
@@ -31,13 +31,7 @@ if (navbar && typeof gsap !== "undefined") {
             navbar.style.transform = "translateY(" + (self.progress * -2) + "px)";
         },
     });
-}window.addEventListener("scroll", function() {
-    var heroH = window.innerHeight;
-    if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
-});
-backToTop.addEventListener("click", function() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-});
+}
 
 
     if (typeof gsap === "undefined") {
