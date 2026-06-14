@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ========================================
  *  🎬  GSAP 动画引擎
  *  首屏 Opening + ScrollTrigger 全动效
@@ -14,6 +14,9 @@ const backToTop = document.getElementById("backToTop");
 window.addEventListener("scroll", function() {
     var heroH = window.innerHeight;
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
+});
+backToTop.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // ===== 导航栏 - GSAP 微缩放 =====
@@ -31,6 +34,9 @@ if (navbar && typeof gsap !== "undefined") {
 }window.addEventListener("scroll", function() {
     var heroH = window.innerHeight;
     if (backToTop) backToTop.classList.toggle("visible", window.scrollY > heroH * 0.5);
+});
+backToTop.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 
