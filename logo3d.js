@@ -1,174 +1,146 @@
 /**
- * ========================================
- *  ✨  3D 光影 Logo — 光影造梦局
- *  Three.js 交互式 Logo，鼠标控制旋转
- * ========================================
+ * 3D 光影 Logo - 光影造梦局
+ * Three.js 交互式，鼠标控制旋转
  */
 (function() {
-    function init3DLogo() {
+    function init() {
         if (typeof THREE === "undefined") {
             var s = document.createElement("script");
             s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
-            s.onload = startScene;
+            s.onload = start;
             document.head.appendChild(s);
         } else {
-            startScene();
+            start();
         }
     }
 
-    function startScene() {
-        var container = document.getElementById("cubeContainer");
-        if (!container) return;
+    function start() {
+        var el = document.getElementById("cubeContainer");
+        if (!el || el._loaded) return;
+        el._loaded = true;
+        while (el.firstChild) el.removeChild(el.firstChild);
 
-        var W = container.clientWidth || 300;
-        var H = container.clientHeight || 300;
+        var size = Math.min(el.clientWidth || 300, window.innerWidth * 0.4);
+        if (size < 100) size = 280;
+        el.style.width = size + "px";
+        el.style.height = size + "px";
+        el.style.margin = "0 auto";
 
         var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 1000);
-        camera.position.set(3, 2, 5);
+        var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 50);
+        camera.position.set(0, 0.5, 5.5);
+        camera.lookAt(0, 0, 0);
 
-        // Clear container (remove old cube markup if any)
-        while (container.firstChild) container.removeChild(container.firstChild);
         var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(W, H);
+        renderer.setSize(size, size);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
-        container.appendChild(renderer.domElement);
+        renderer.setClearColor(0x000000, 0);
+        el.appendChild(renderer.domElement);
 
         var group = new THREE.Group();
         scene.add(group);
 
-        // --- Crystal ---
-        var cGeo = new THREE.IcosahedronGeometry(1.0, 1);
-        var cMat = new THREE.MeshPhysicalMaterial({
-            color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.15,
-            metalness: 0.3, roughness: 0.1, clearcoat: 0.8, clearcoatRoughness: 0.2,
-            transparent: true, opacity: 0.95
+        // Crystal
+        var mat = new THREE.MeshPhysicalMaterial({
+            color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.2,
+            metalness: 0.4, roughness: 0.1, clearcoat: 0.6, clearcoatRoughness: 0.3,
+            transparent: true, opacity: 0.9
         });
-        var crystal = new THREE.Mesh(cGeo, cMat);
+        var crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(1.0, 1), mat);
         group.add(crystal);
 
-        // Core glow
-        var coreGeo = new THREE.IcosahedronGeometry(0.5, 0);
-        var coreMat = new THREE.MeshBasicMaterial({ color: 0xff2d95, transparent: true, opacity: 0.3 });
-        var core = new THREE.Mesh(coreGeo, coreMat);
+        // Core
+        var core = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(0.45, 0),
+            new THREE.MeshBasicMaterial({ color: 0xff2d95, transparent: true, opacity: 0.25 })
+        );
         group.add(core);
 
         // Wireframe
-        var wGeo = new THREE.IcosahedronGeometry(1.05, 1);
-        var wMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.2 });
-        var wire = new THREE.Mesh(wGeo, wMat);
+        var wire = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(1.05, 1),
+            new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.15 })
+        );
         group.add(wire);
 
-        // --- Rings ---
-        function makeRing(r, tr, col, rx, ry) {
-            var g = new THREE.TorusGeometry(r, tr, 32, 64);
-            var m = new THREE.MeshPhysicalMaterial({
-                color: col, emissive: col, emissiveIntensity: 0.5,
-                metalness: 0.8, roughness: 0.2, transparent: true, opacity: 0.7
-            });
-            var mesh = new THREE.Mesh(g, m);
-            mesh.rotation.x = rx;
-            mesh.rotation.y = ry;
-            return mesh;
+        // Rings
+        function ring(r, tr, col, rx, ry) {
+            var m = new THREE.Mesh(
+                new THREE.TorusGeometry(r, tr, 24, 48),
+                new THREE.MeshPhysicalMaterial({ color: col, emissive: col, emissiveIntensity: 0.4, metalness: 0.6, roughness: 0.3, transparent: true, opacity: 0.6 })
+            );
+            m.rotation.x = rx; m.rotation.y = ry;
+            return m;
         }
-        var r1 = makeRing(1.6, 0.025, 0x00f0ff, Math.PI / 3, 0);
-        var r2 = makeRing(1.9, 0.02, 0xff2d95, Math.PI / 1.5, Math.PI / 4);
-        var r3 = makeRing(1.3, 0.015, 0xffea00, Math.PI / 2.5, -Math.PI / 3);
-        group.add(r1); group.add(r2); group.add(r3);
+        group.add(ring(1.5, 0.02, 0x00f0ff, Math.PI/3, 0));
+        group.add(ring(1.8, 0.018, 0xff2d95, Math.PI/1.5, Math.PI/4));
+        group.add(ring(1.2, 0.012, 0xffea00, Math.PI/2.5, -Math.PI/3));
 
-        // --- Particles ---
-        var pCount = 200;
-        var pGeo = new THREE.BufferGeometry();
-        var pos = new Float32Array(pCount * 3);
-        var pcols = new Float32Array(pCount * 3);
-        var cC = new THREE.Color(0x00f0ff), cP = new THREE.Color(0xff2d95), cY = new THREE.Color(0xffea00);
-        var pals = [cC, cP, cY];
-        for (var i = 0; i < pCount; i++) {
-            var t = Math.random() * Math.PI * 2;
-            var p = Math.acos(2 * Math.random() - 1);
-            var r = 2.2 + Math.random() * 1.5;
-            pos[i*3] = r * Math.sin(p) * Math.cos(t);
-            pos[i*3+1] = r * Math.sin(p) * Math.sin(t);
-            pos[i*3+2] = r * Math.cos(p);
-            var col = pals[Math.floor(Math.random() * 3)];
-            pcols[i*3] = col.r; pcols[i*3+1] = col.g; pcols[i*3+2] = col.b;
+        // Particles
+        var pc = 150, g = new THREE.BufferGeometry(), pos = new Float32Array(pc*3), cols = new Float32Array(pc*3);
+        var pal = [new THREE.Color(0x00f0ff), new THREE.Color(0xff2d95), new THREE.Color(0xffea00)];
+        for (var i = 0; i < pc; i++) {
+            var t = Math.random()*Math.PI*2, p = Math.acos(2*Math.random()-1), r = 2+Math.random()*1.8;
+            pos[i*3] = r*Math.sin(p)*Math.cos(t); pos[i*3+1] = r*Math.sin(p)*Math.sin(t); pos[i*3+2] = r*Math.cos(p);
+            var c = pal[Math.floor(Math.random()*3)];
+            cols[i*3]=c.r; cols[i*3+1]=c.g; cols[i*3+2]=c.b;
         }
-        pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-        pGeo.setAttribute("color", new THREE.BufferAttribute(pcols, 3));
-        var pMat = new THREE.PointsMaterial({
-            size: 0.06, vertexColors: true, transparent: true, opacity: 0.8,
-            blending: THREE.AdditiveBlending, sizeAttenuation: true
-        });
-        var particles = new THREE.Points(pGeo, pMat);
-        group.add(particles);
+        g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        g.setAttribute("color", new THREE.BufferAttribute(cols, 3));
+        var pts = new THREE.Points(g, new THREE.PointsMaterial({ size: 0.05, vertexColors: true, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending, sizeAttenuation: true }));
+        group.add(pts);
 
-        // --- Lights ---
-        var l1 = new THREE.PointLight(0x00f0ff, 1.5, 10);
-        l1.position.set(3, 2, 2); scene.add(l1);
-        var l2 = new THREE.PointLight(0xff2d95, 1.5, 10);
-        l2.position.set(-2, -2, 3); scene.add(l2);
-        scene.add(new THREE.AmbientLight(0x224466, 0.3));
+        // Lights
+        var l1 = new THREE.PointLight(0x00f0ff, 1, 8); l1.position.set(2.5, 2, 2); scene.add(l1);
+        var l2 = new THREE.PointLight(0xff2d95, 1, 8); l2.position.set(-2, -1.5, 2.5); scene.add(l2);
+        scene.add(new THREE.AmbientLight(0x334466, 0.4));
 
-        // --- Mouse ---
+        // Mouse
         var tx = 0, ty = 0, cx = 0, cy = 0;
         document.addEventListener("mousemove", function(e) {
-            var rect = container.getBoundingClientRect();
-            ty = ((e.clientX - rect.left) / rect.width - 0.5) * Math.PI * 0.8;
-            tx = ((e.clientY - rect.top) / rect.height - 0.5) * Math.PI * 0.4;
+            var r = el.getBoundingClientRect();
+            ty = ((e.clientX - r.left)/r.width - 0.5)*Math.PI;
+            tx = ((e.clientY - r.top)/r.height - 0.5)*Math.PI*0.5;
         });
         document.addEventListener("touchmove", function(e) {
-            var t = e.touches[0];
-            var rect = container.getBoundingClientRect();
-            ty = ((t.clientX - rect.left) / rect.width - 0.5) * Math.PI * 0.8;
-            tx = ((t.clientY - rect.top) / rect.height - 0.5) * Math.PI * 0.4;
+            var t = e.touches[0], r = el.getBoundingClientRect();
+            ty = ((t.clientX - r.left)/r.width - 0.5)*Math.PI;
+            tx = ((t.clientY - r.top)/r.height - 0.5)*Math.PI*0.5;
         }, { passive: true });
 
-        // --- Animation Loop ---
+        // Animation
         var time = 0;
-        function animate() {
-            requestAnimationFrame(animate);
+        (function loop() {
+            requestAnimationFrame(loop);
             time += 0.01;
-
-            cx += (tx - cx) * 0.05;
-            cy += (ty - cy) * 0.05;
+            cx += (tx-cx)*0.06; cy += (ty-cy)*0.06;
             group.rotation.x = cx;
-            group.rotation.y = cy;
-            group.rotation.y += 0.002;
+            group.rotation.y = cy + time * 0.002;
 
-            var pulse = Math.sin(time * 1.5) * 0.15 + 0.85;
-            cMat.emissiveIntensity = 0.1 + pulse * 0.15;
-            coreMat.opacity = 0.2 + Math.sin(time * 2) * 0.15;
+            var p = Math.sin(time)*0.12+0.88;
+            mat.emissiveIntensity = 0.12 + p*0.18;
+            core.material.opacity = 0.2 + Math.sin(time*2)*0.12;
 
-            r1.rotation.z += 0.008;
-            r2.rotation.x += 0.006; r2.rotation.z += 0.004;
-            r3.rotation.y += 0.01; r3.rotation.x += 0.005;
+            group.children[3].rotation.z += 0.01;
+            group.children[4].rotation.x += 0.008;
+            group.children[4].rotation.z += 0.005;
+            group.children[5].rotation.y += 0.012;
+            group.children[5].rotation.x += 0.006;
 
-            var hue = 0.55 + Math.sin(time * 0.3) * 0.15;
-            var hCol = new THREE.Color().setHSL(hue, 0.9, 0.5);
-            cMat.color.copy(hCol); cMat.emissive.copy(hCol);
+            var hue = 0.55 + Math.sin(time*0.25)*0.12;
+            var hc = new THREE.Color().setHSL(hue, 0.85, 0.5);
+            mat.color.copy(hc); mat.emissive.copy(hc);
 
-            l1.position.set(Math.sin(time*0.7)*3, 1.5+Math.sin(time*0.5)*0.5, Math.cos(time*0.7)*3);
-            l2.position.set(Math.sin(time*0.5+2)*3, -1+Math.sin(time*0.4)*0.5, Math.cos(time*0.5+2)*3);
+            l1.position.set(Math.sin(time*0.6)*2.5, 1.5+Math.sin(time*0.4)*0.5, Math.cos(time*0.6)*2.5);
+            l2.position.set(Math.sin(time*0.4+2)*2.5, -1+Math.sin(time*0.3)*0.5, Math.cos(time*0.4+2)*2.5);
 
-            particles.rotation.y += 0.001;
+            pts.rotation.y += 0.001;
             renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener("resize", function() {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        });
-
-        if (window.innerWidth < 768) camera.position.set(3.5, 2.5, 5);
+        })();
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init3DLogo);
-    } else {
-        init3DLogo();
-    }
+    if (document.readyState === "loading")
+        document.addEventListener("DOMContentLoaded", init);
+    else
+        init();
 })();
